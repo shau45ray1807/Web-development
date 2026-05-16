@@ -1,0 +1,1773 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Notes - Display Property</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,600;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap');
+
+    :root {
+      --bg: #0a0f1e;
+      --bg2: #0d1b2a;
+      --bg3: #0f2340;
+      --bg4: #071120;
+      --accent: #e94560;
+      --green: #06d6a0;
+      --yellow: #ffd166;
+      --blue: #00b4d8;
+      --purple: #9d4edd;
+      --orange: #f77f00;
+      --text: #e8eaf6;
+      --text2: #a8b2d8;
+      --border: #1e3a5f;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Syne', sans-serif;
+      font-size: 15px;
+      line-height: 1.75;
+    }
+
+    .new-page {
+      page-break-before: always;
+      break-before: page;
+    }
+
+    .cover {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: linear-gradient(160deg, #0a0f1e 0%, #0d1b2a 60%, #0f2340 100%);
+      border-bottom: 3px solid var(--accent);
+      padding: 60px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cover::before {
+      content: '';
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0, 180, 216, 0.08) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .cover-badge {
+      background: var(--accent);
+      color: #fff;
+      padding: 5px 18px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+      display: inline-block;
+    }
+
+    .cover h1 {
+      font-size: 68px;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1;
+      letter-spacing: -3px;
+      margin-bottom: 12px;
+    }
+
+    .cover h1 span {
+      color: var(--blue);
+    }
+
+    .cover-subtitle {
+      font-size: 18px;
+      color: var(--text2);
+      margin-bottom: 6px;
+    }
+
+    .cover-course {
+      font-size: 13px;
+      color: var(--yellow);
+      letter-spacing: 1.5px;
+      margin-bottom: 50px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .topics-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      max-width: 780px;
+    }
+
+    .t-pill {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--text2);
+      padding: 5px 14px;
+      font-size: 12px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .page {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 60px 40px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sec-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    h2.sec-title {
+      font-size: 32px;
+      font-weight: 800;
+      color: #fff;
+      border-left: 4px solid var(--blue);
+      padding-left: 16px;
+      margin-bottom: 6px;
+      line-height: 1.2;
+    }
+
+    h2.sec-title .desc {
+      display: block;
+      font-size: 13px;
+      color: var(--text2);
+      font-weight: 400;
+      letter-spacing: 0.5px;
+      margin-top: 5px;
+    }
+
+    .what-box {
+      background: var(--bg2);
+      border-left: 3px solid var(--blue);
+      padding: 16px 20px;
+      margin: 24px 0;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .what-box .wlabel {
+      font-size: 10px;
+      color: var(--blue);
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .what-box p {
+      color: var(--text2);
+      font-size: 14px;
+    }
+
+    .tip,
+    .note,
+    .warn {
+      padding: 12px 18px;
+      margin: 18px 0;
+      border-radius: 0 4px 4px 0;
+      font-size: 13.5px;
+    }
+
+    .tip {
+      background: rgba(6, 214, 160, 0.08);
+      border-left: 3px solid var(--green);
+      color: var(--green);
+    }
+
+    .note {
+      background: rgba(255, 209, 102, 0.08);
+      border-left: 3px solid var(--yellow);
+      color: var(--yellow);
+    }
+
+    .warn {
+      background: rgba(233, 69, 96, 0.08);
+      border-left: 3px solid var(--accent);
+      color: var(--accent);
+    }
+
+    .tip strong,
+    .note strong,
+    .warn strong {
+      font-weight: 700;
+      margin-right: 6px;
+    }
+
+    .code-wrap {
+      margin: 20px 0;
+    }
+
+    .code-label {
+      background: var(--bg3);
+      padding: 6px 14px;
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text2);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+    }
+
+    .dot-r {
+      background: #e94560;
+    }
+
+    .dot-y {
+      background: #ffd166;
+    }
+
+    .dot-g {
+      background: #06d6a0;
+    }
+
+    pre {
+      background: var(--bg4);
+      border: 1px solid var(--border);
+      padding: 20px 22px;
+      overflow-x: auto;
+      border-top: none;
+    }
+
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      line-height: 1.9;
+    }
+
+    .kw {
+      color: #e94560;
+    }
+
+    .pr {
+      color: #00b4d8;
+    }
+
+    .vl {
+      color: #06d6a0;
+    }
+
+    .cm {
+      color: #4a6080;
+      font-style: italic;
+    }
+
+    .tg {
+      color: #ffd166;
+    }
+
+    .at {
+      color: #9d4edd;
+    }
+
+    .pn {
+      color: #a8b2d8;
+    }
+
+    .sel {
+      color: #f77f00;
+    }
+
+    .tbl-wrap {
+      margin: 20px 0;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+    }
+
+    thead tr {
+      background: var(--bg3);
+    }
+
+    th {
+      padding: 10px 16px;
+      text-align: left;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--blue);
+      letter-spacing: 1px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    td {
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text2);
+      vertical-align: top;
+    }
+
+    td:first-child {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--yellow);
+      font-size: 13px;
+    }
+
+    tbody tr:hover {
+      background: var(--bg2);
+    }
+
+    ic {
+      background: var(--bg3);
+      color: var(--yellow);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12.5px;
+      padding: 1px 7px;
+      border-radius: 3px;
+      border: 1px solid var(--border);
+    }
+
+    h3.sh {
+      font-size: 17px;
+      font-weight: 700;
+      color: #fff;
+      margin: 30px 0 12px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    h3.sh::before {
+      content: '\25A0';
+      color: var(--accent);
+      font-size: 10px;
+    }
+
+    p.para {
+      color: var(--text2);
+      margin: 10px 0;
+      font-size: 14.5px;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 20px 0;
+    }
+
+    .info-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .info-card .ic-head {
+      padding: 8px 14px;
+      font-size: 11px;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 1px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg3);
+    }
+
+    .info-card .ic-body {
+      padding: 14px 16px;
+      font-size: 13px;
+      color: var(--text2);
+      line-height: 1.8;
+    }
+
+    .demo-box {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 20px 24px;
+      margin: 16px 0;
+    }
+
+    .demo-label {
+      font-size: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text2);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .demo-row {
+      margin: 10px 0;
+      color: var(--text2);
+      font-size: 13px;
+    }
+
+    .visual-line {
+      border: 1px dashed var(--border);
+      padding: 10px;
+      margin-top: 8px;
+    }
+
+    .demo-item {
+      background: var(--bg3);
+      border: 1px solid var(--blue);
+      color: var(--text);
+      padding: 7px 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      margin: 4px;
+    }
+
+    .inline-demo .demo-item {
+      display: inline;
+    }
+
+    .inline-block-demo .demo-item {
+      display: inline-block;
+      width: 110px;
+    }
+
+    .block-demo .demo-item {
+      display: block;
+    }
+
+    .flex-demo {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .grid-demo {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .flow-root-demo {
+      display: flow-root;
+      border: 1px dashed var(--green);
+      padding: 12px;
+    }
+
+    .float-box {
+      float: left;
+      width: 92px;
+      height: 52px;
+      margin-right: 12px;
+      background: rgba(6, 214, 160, 0.18);
+      border: 1px solid var(--green);
+      color: var(--green);
+      display: grid;
+      place-items: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 40px;
+      color: var(--text2);
+      font-size: 13px;
+      font-family: 'JetBrains Mono', monospace;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer span {
+      color: var(--accent);
+    }
+
+    @media (max-width: 720px) {
+      .cover h1 {
+        font-size: 44px;
+        letter-spacing: -1px;
+      }
+
+      .page {
+        padding: 44px 22px;
+      }
+
+      h2.sec-title {
+        font-size: 26px;
+      }
+
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+
+      .grid-demo {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media print {
+      @page {
+        size: A4;
+        margin: 12mm;
+      }
+
+      body {
+        background: var(--bg);
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .cover {
+        min-height: 100vh;
+        page-break-after: always;
+        break-after: page;
+      }
+
+      .page {
+        max-width: none;
+        padding: 26px 18px;
+        border-bottom: none;
+        page-break-before: always;
+        break-before: page;
+      }
+
+      .what-box,
+      .tip,
+      .note,
+      .warn,
+      .code-wrap,
+      .tbl-wrap,
+      .info-card,
+      .demo-box {
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+
+      pre {
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="cover">
+    <div class="cover-badge">&#9632; Complete Notes - Topic 07</div>
+    <h1>CSS <span>Display</span><br>Property</h1>
+    <p class="cover-subtitle">Basic se Advanced tak - element layout behavior ka complete system</p>
+    <p class="cover-course">Web Development Course - Shauray</p>
+    <div class="topics-list">
+      <span class="t-pill">block</span>
+      <span class="t-pill">inline</span>
+      <span class="t-pill">inline-block</span>
+      <span class="t-pill">none</span>
+      <span class="t-pill">flex</span>
+      <span class="t-pill">grid</span>
+      <span class="t-pill">flow-root</span>
+      <span class="t-pill">contents</span>
+      <span class="t-pill">table</span>
+      <span class="t-pill">list-item</span>
+      <span class="t-pill">visibility vs opacity</span>
+      <span class="t-pill">outer / inner display</span>
+    </div>
+  </div>
+
+  <div class="page new-page">
+    <div class="sec-label">// TOPIC 01 - DISPLAY BASICS</div>
+    <h2 class="sec-title">Display Property Kya Hai?
+      <span class="desc">Browser ko batana ki element page par kis tarah ka box banayega</span>
+    </h2>
+
+    <div class="what-box">
+      <div class="wlabel">Simple Definition</div>
+      <p><ic>display</ic> CSS property decide karti hai ki HTML element layout mein kaise behave karega: kya woh full
+        line lega, text ke saath same line mein rahega, children ko flex/grid layout mein arrange karega, ya bilkul
+        render hi nahi hoga.</p>
+    </div>
+
+    <p class="para">Har HTML element browser ke andar ek box banata hai. <ic>display</ic> us box ka bahar ka behavior
+      aur andar ka layout system control karta hai. Isliye display property CSS layout ka foundation hai. Agar display
+      samajh aa gaya, to Flexbox, Grid, navbar, cards, hidden elements, responsive menus aur page structure easy ho
+      jata hai.</p>
+
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>basic syntax</div>
+      <pre><code><span class="sel">selector</span> <span class="pn">{</span>
+  <span class="pr">display</span><span class="pn">:</span> <span class="vl">block</span><span class="pn">;</span>
+<span class="pn">}</span>
+
+<span class="sel">.nav</span> <span class="pn">{</span>
+  <span class="pr">display</span><span class="pn">:</span> <span class="vl">flex</span><span class="pn">;</span>
+<span class="pn">}</span></code></pre>
+    </div>
+
+    <h3 class="sh">Display Property Ka Main Kaam</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Control</th>
+            <th>Meaning</th>
+            <th>Example</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Outer behavior</td>
+            <td>Element surrounding elements ke saath kaise behave karega</td>
+            <td>block, inline, inline-block</td>
+          </tr>
+          <tr>
+            <td>Inner layout</td>
+            <td>Element apne children ko kaise arrange karega</td>
+            <td>flow, flex, grid, table</td>
+          </tr>
+          <tr>
+            <td>Rendering</td>
+            <td>Element visible/rendered rahega ya layout se remove hoga</td>
+            <td>none, contents</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sh">Default Display Values</h3>
+    <p class="para">HTML elements ke paas default display values hoti hain. Example: <ic>div</ic> block hota hai,
+      <ic>span</ic> inline hota hai, <ic>ul</ic> block hota hai aur <ic>li</ic> list-item hota hai.</p>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Element</th>
+            <th>Default Display</th>
+            <th>Behavior</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>div, p, h1-h6, section</td>
+            <td>block</td>
+            <td>New line start, full available width leta hai</td>
+          </tr>
+          <tr>
+            <td>span, a, strong, em</td>
+            <td>inline</td>
+            <td>Text ke flow mein same line par rehta hai</td>
+          </tr>
+          <tr>
+            <td>img, input, button</td>
+            <td>inline-block / inline-level</td>
+            <td>Same line mein aa sakte hain but size control possible hota hai</td>
+          </tr>
+          <tr>
+            <td>ul, ol</td>
+            <td>block</td>
+            <td>List container full width leta hai</td>
+          </tr>
+          <tr>
+            <td>li</td>
+            <td>list-item</td>
+            <td>Marker/bullet ke saath list item box banata hai</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note"><strong>&#9632; Golden Start:</strong> <ic>display</ic> ka value badalte hi element ka box model
+      behavior change ho sakta hai. Isliye layout bug debug karte time pehle element ka computed display check karo.</div>
+  </div>
+
+  <div class="page new-page">
+    <div class="sec-label">// TOPIC 02 - BLOCK, INLINE, INLINE-BLOCK</div>
+    <h2 class="sec-title">Block vs Inline vs Inline-Block
+      <span class="desc">CSS layout ka sabse important basic comparison</span>
+    </h2>
+
+    <h3 class="sh">1. display: block</h3>
+    <p class="para"><ic>block</ic> element new line se start hota hai aur by default parent ki full available width
+      le leta hai. Width, height, margin, padding properly apply hote hain.</p>
+
+    <div class="demo-box">
+      <div class="demo-label">block visual demo</div>
+      <div class="visual-line block-demo">
+        <span class="demo-item">Block 1</span>
+        <span class="demo-item">Block 2</span>
+        <span class="demo-item">Block 3</span>
+      </div>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>block example</div>
+      <pre><code><span class="sel">.box</span> <span class="pn">{</span>
+  <span class="pr">display</span><span class="pn">:</span> <span class="vl">block</span><span class="pn">;</span>
+  <span class="pr">width</span><span class="pn">:</span> <span class="vl">300px</span><span class="pn">;</span>
+  <span class="pr">height</span><span class="pn">:</span> <span class="vl">120px</span><span class="pn">;</span>
+  <span class="pr">margin</span><span class="pn">:</span> <span class="vl">20px auto</span><span class="pn">;</span>
+<span class="pn">}</span></code></pre>
+    </div>
+
+    <h3 class="sh">2. display: inline</h3>
+    <p class="para"><ic>inline</ic> element text flow ke andar rehta hai. Yeh new line force nahi karta. Is par
+      <ic>width</ic> aur <ic>height</ic> ka effect normally nahi hota. Horizontal margin/padding work karte hain, but
+      vertical spacing layout ko expected tarah push nahi karta.</p>
+
+    <div class="demo-box">
+      <div class="demo-label">inline visual demo</div>
+      <div class="visual-line inline-demo">
+        Normal text ke beech <span class="demo-item">inline 1</span><span class="demo-item">inline 2</span><span
+          class="demo-item">inline 3</span> same line par flow karte hain.
+      </div>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>inline example</div>
+      <pre><code><span class="sel">a</span> <span class="pn">{</span>
+  <span class="pr">display</span><span class="pn">:</span> <span class="vl">inline</span><span class="pn">;</span>
+  <span class="pr">color</span><span class="pn">:</span> <span class="vl">hotpink</span><span class="pn">;</span>
+  <span class="pr">padding-inline</span><span class="pn">:</span> <span class="vl">8px</span><span class="pn">;</span>
+<span class="pn">}</span></code></pre>
+    </div>
+
+    <h3 class="sh">3. display: inline-block</h3>
+    <p class="para"><ic>inline-block</ic> dono ka mix hai. Element same line mein aa sakta hai, but width, height,
+      margin aur padding block element ki tarah control ho sakte hain. Buttons, badges, chips, small cards aur nav
+      links mein kaafi useful hai.</p>
+
+    <div class="demo-box">
+      <div class="demo-label">inline-block visual demo</div>
+      <div class="visual-line inline-block-demo">
+        <span class="demo-item">110px</span>
+        <span class="demo-item">110px</span>
+        <span class="demo-item">110px</span>
+      </div>
+    </div>
+
+    <h3 class="sh">Comparison Table</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>block</th>
+            <th>inline</th>
+            <th>inline-block</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>New line</td>
+            <td>Yes</td>
+            <td>No</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td>Default width</td>
+            <td>Full available width</td>
+            <td>Content width</td>
+            <td>Content width</td>
+          </tr>
+          <tr>
+            <td>Width/height</td>
+            <td>Works</td>
+            <td>Mostly ignored</td>
+            <td>Works</td>
+          </tr>
+          <tr>
+            <td>Best use</td>
+            <td>Sections, cards, containers</td>
+            <td>Text links, spans, emphasis</td>
+            <td>Buttons, badges, nav items</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip"><strong>&#9632; Practical Tip:</strong> Anchor tag ko button jaisa banana ho to usually
+      <ic>display: inline-block</ic> ya <ic>display: inline-flex</ic> use karo, taaki padding aur dimensions cleanly
+      work karein.</div>
+  </div>
+
+  <div class="page new-page">
+    <div class="sec-label">// TOPIC 03 - DISPLAY NONE AND HIDING</div>
+    <h2 class="sec-title">display: none aur Hiding Techniques
+      <span class="desc">Element ko hide karne ke different tareeqe aur unka layout par effect</span>
+    </h2>
+
+    <div class="what-box">
+      <div class="wlabel">Key Idea</div>
+      <p><ic>display: none</ic> element ko page rendering tree se remove kar deta hai. Element visible nahi hota aur
+        layout mein space bhi reserve nahi karta.</p>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>display none</div>
+      <pre><code><span class="sel">.modal</span> <span class="pn">{</span>
+  <span class="pr">display</span><span class="pn">:</span> <span class="vl">none</span><span class="pn">;</span>
+<span class="pn">}</span>
+
+<span class="sel">.modal.is-open</span> <span class="pn">{</span>
+  <span class="pr">display</span><span class="pn">:</span> <span class="vl">block</span><span class="pn">;</span>
+<span class="pn">}</span></code></pre>
+    </div>
+
+    <h3 class="sh">display none vs visibility hidden vs opacity 0</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Visible?</th>
+            <th>Space Reserved?</th>
+            <th>Clickable?</th>
+            <th>Common Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>display: none</td>
+            <td>No</td>
+            <td>No</td>
+            <td>No</td>
+            <td>Completely remove from layout</td>
+          </tr>
+          <tr>
+            <td>visibility: hidden</td>
+            <td>No</td>
+            <td>Yes</td>
+            <td>No</td>
+            <td>Hide but keep layout space</td>
+          </tr>
+          <tr>
+            <td>opacity: 0</td>
+            <td>No visually</td>
+            <td>Yes</td>
+            <td>Yes, unless pointer-events none</td>
+            <td>Fade animation</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sh">Animation Important Point</h3>
+    <p class="para"><ic>display</ic> ko smoothly transition nahi kar sakte like opacity. Agar fade-in/fade-out chahiye,
+      to <ic>opacity</ic>, <ic>visibility</ic>, <ic>transform</ic>, aur sometimes <ic>pointer-events</ic> combine
+      karna better hota hai.</p>
+
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>fade hide pattern</div>
+      <pre><code><span class="sel">.dropdown</span> <span class="pn">{</span>
+  <span class="pr">opacity</span><span class="pn">:</span> <span class="vl">0</span><span class="pn">;</span>
+  <span class="pr">visibility</span><span class="pn">:</span> <span class="vl">hidden</span><span class="pn">;</span>
+  <span class="pr">pointer-events</span><span class="pn">:</span> <span class="vl">none</span><span class="pn">;</span>
+  <span class="pr">transform</span><span class="pn">:</span> <span class="vl">translateY(8px)</span><span class="pn">;</span>
+  <span class="pr">transition</span><span class="pn">:</span> <span class="vl">200ms ease</span><span class="pn">;</span>
+<span class="pn">}</span>
+
+<span class="sel">.menu:hover .dropdown</span> <span class="pn">{</span>
+  <span class="pr">opacity</span><span class="pn">:</span> <span class="vl">1</span><span class="pn">;</span>
+  <span class="pr">visibility</span><span class="pn">:</span> <span class="vl">visible</span><span class="pn">;</span>
+  <span class="pr">pointer-events</span><span class="pn">:</span> <span class="vl">auto</span><span class="pn">;</span>
+  <span class="pr">transform</span><span class="pn">:</span> <span class="vl">translateY(0)</span><span class="pn">;</span>
+<span class="pn">}</span></code></pre>
+    </div>
+
+    <div class="warn"><strong>&#9632; Accessibility Note:</strong> Important content ko sirf visually hide karke leave
+      mat karo. Screen readers, keyboard focus aur tab order par effect samajhna zaroori hai, especially menus, modals
+      aur form errors mein.</div>
+  </div>
+
+  <div class="page new-page">
+    <div class="sec-label">// TOPIC 04 - FLEX DISPLAY</div>
+    <h2 class="sec-title">display: flex aur inline-flex
+      <span class="desc">One-dimensional layout system for rows and columns</span>
+    </h2>
+
+    <div class="what-box">
+      <div class="wlabel">Definition</div>
+      <p><ic>display: flex</ic> element ko flex container bana deta hai. Uske direct children flex items ban jaate hain.
+        Flexbox ek direction mein layout arrange karne ke liye best hai: row ya column.</p>
+    </div>
+
+    <div class="demo-box">
+      <div class="demo-label">flex visual demo</div>
+      <div class="visual-line flex-demo">
+        <span class="demo-item">Logo</span>
+        <span class="demo-item">Home</span>
+        <span class="demo-item">About</span>
+        <span class="demo-item">Contact</span>
+      </div>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>navbar flex</div>
+      <pre><code><span class="sel">.navbar</span> <span class="pn">{</span>
+  <span class="pr">display</span><span class="pn">:</span> <span class="vl">flex</span><span class="pn">;</span>
+  <span class="pr">align-items</span><span class="pn">:</span> <span class="vl">center</span><span class="pn">;</span>
+  <span class="pr">justify-content</span><span class="pn">:</span> <span class="vl">space-between</span><span class="pn">;</span>
+  <span class="pr">gap</span><span class="pn">:</span> <span class="vl">1rem</span><span class="pn">;</span>
+<span class="pn">}</span></code></pre>
+    </div>
+
+    <h3 class="sh">flex vs inline-flex</h3>
+    <p class="para"><ic>flex</ic> container outside se block-level behave karta hai. <ic>inline-flex</ic> outside se
+      inline-level behave karta hai, but inside children flex items hi rehte hain.</p>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Value</th>
+            <th>Outer Behavior</th>
+            <th>Inner Layout</th>
+            <th>Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>display: flex</td>
+            <td>Block-level container</td>
+            <td>Flex formatting context</td>
+            <td>Navbar, card layout, page sections</td>
+          </tr>
+          <tr>
+            <td>display: inline-flex</td>
+            <td>Inline-level container</td>
+            <td>Flex formatting context</td>
+            <td>Buttons with icon, badges, chips</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sh">Common Flex Use Cases</h3>
+    <div class="two-col">
+      <div class="info-card">
+        <div class="ic-head" style="color:var(--green);">GOOD FOR</div>
+        <div class="ic-body">
+          Centering items.<br>
+          Navbar links in a row.<br>
+          Icon + text buttons.<br>
+          Equal height cards in one row.<br>
+          Sidebar + content simple layouts.
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="ic-head" style="color:var(--yellow);">REMEMBER</div>
+        <div class="ic-body">
+          Flex affects only direct children.<br>
+          Main axis depends on flex-direction.<br>
+          gap works in modern browsers.<br>
+          flex-wrap controls wrapping.<br>
+          align-items controls cross axis.
+        </div>
+      </div>
+    </div>
+
+    <div class="tip"><strong>&#9632; Centering Shortcut:</strong> Single item center karna ho to parent par
+      <ic>display: grid; place-items: center;</ic> bhi clean option hai. Multiple row/column control chahiye to flex
+      useful hai.</div>
+  </div>
+
+  <div class="page new-page">
+    <div class="sec-label">// TOPIC 05 - GRID DISPLAY</div>
+    <h2 class="sec-title">display: grid aur inline-grid
+      <span class="desc">Two-dimensional layout system for rows and columns together</span>
+    </h2>
+
+    <div class="what-box">
+      <div class="wlabel">Definition</div>
+      <p><ic>display: grid</ic> element ko grid container bana deta hai. Direct children grid items ban jaate hain.
+        Grid rows aur columns dono directions mein layout control karne ke liye best hai.</p>
+    </div>
+
+    <div class="demo-box">
+      <div class="demo-label">grid visual demo</div>
+      <div class="visual-line grid-demo">
+        <span class="demo-item">1</span>
+        <span class="demo-item">2</span>
+        <span class="demo-item">3</span>
+        <span class="demo-item">4</span>
+        <span class="demo-item">5</span>
+        <span class="demo-item">6</span>
+      </div>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>responsive cards grid</div>
+      <pre><code><span class="sel">.cards</span> <span class="pn">{</span>
+  <span class="pr">display</span><span class="pn">:</span> <span class="vl">grid</span><span class="pn">;</span>
+  <span class="pr">grid-template-columns</span><span class="pn">:</span> <span class="vl">repeat(auto-fit, minmax(220px, 1fr))</span><span class="pn">;</span>
+  <span class="pr">gap</span><span class="pn">:</span> <span class="vl">1rem</span><span class="pn">;</span>
+<span class="pn">}</span></code></pre>
+    </div>
+
+    <h3 class="sh">grid vs inline-grid</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Value</th>
+            <th>Outer Behavior</th>
+            <th>Inner Layout</th>
+            <th>Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>display: grid</td>
+            <td>Block-level grid container</td>
+            <td>Grid formatting context</td>
+            <td>Page layout, cards, dashboards, galleries</td>
+          </tr>
+          <tr>
+            <td>display: inline-grid</td>
+            <td>Inline-level grid container</td>
+            <td>Grid formatting context</td>
+            <td>Small inline layouts, compact controls</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sh">Flexbox vs Grid Decision</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Need</th>
+            <th>Choose</th>
+            <th>Reason</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Only row or only column control</td>
+            <td>Flexbox</td>
+            <td>One-dimensional layout simple hota hai</td>
+          </tr>
+          <tr>
+            <td>Rows and columns together</td>
+            <td>Grid</td>
+            <td>Two-dimensional layout ka direct control milta hai</td>
+          </tr>
+          <tr>
+            <td>Unknown number of cards</td>
+            <td>Grid</td>
+            <td>auto-fit + minmax responsive card layout bana deta hai</td>
+          </tr>
+          <tr>
+            <td>Icon and text align karna</td>
+            <td>inline-flex</td>
+            <td>Small component alignment fast and readable</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note"><strong>&#9632; Advanced Point:</strong> Flex aur Grid dono direct children par apply hote hain.
+      Grandchildren ko affect karna ho to nested flex/grid lagana padega.</div>
+  </div>
+
+  <div class="page new-page">
+    <div class="sec-label">// TOPIC 06 - FLOW-ROOT AND FORMATTING CONTEXT</div>
+    <h2 class="sec-title">display: flow-root
+      <span class="desc">Modern clearfix aur block formatting context create karne ka clean method</span>
+    </h2>
+
+    <div class="what-box">
+      <div class="wlabel">Definition</div>
+      <p><ic>display: flow-root</ic> element ko block-level box banata hai aur uske andar new block formatting context
+        create karta hai. Simple words mein, floats contain ho jaate hain aur margin/floating problems clean ho sakti
+        hain.</p>
+    </div>
+
+    <h3 class="sh">Float Contain Karna</h3>
+    <p class="para">Purane layouts mein float use hota tha. Float child normal flow se partially bahar behave karta
+      hai, jisse parent height collapse ho sakti hai. <ic>flow-root</ic> parent ko apne floated children contain karne
+      mein help karta hai.</p>
+
+    <div class="demo-box">
+      <div class="demo-label">flow-root demo</div>
+      <div class="flow-root-demo">
+        <div class="float-box">float</div>
+        Yeh parent <ic>display: flow-root</ic> use kar raha hai, isliye floated box parent ke andar properly contained
+        hai. Parent ka border content ke around stay karta hai.
+      </div>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>modern clearfix</div>
+      <pre><code><span class="sel">.article-card</span> <span class="pn">{</span>
+  <span class="pr">display</span><span class="pn">:</span> <span class="vl">flow-root</span><span class="pn">;</span>
+<span class="pn">}</span>
+
+<span class="sel">.article-card img</span> <span class="pn">{</span>
+  <span class="pr">float</span><span class="pn">:</span> <span class="vl">left</span><span class="pn">;</span>
+  <span class="pr">margin-right</span><span class="pn">:</span> <span class="vl">1rem</span><span class="pn">;</span>
+<span class="pn">}</span></code></pre>
+    </div>
+
+    <h3 class="sh">Block Formatting Context Kab Useful Hai?</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Problem</th>
+            <th>flow-root Help</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Parent floated children ko contain nahi kar raha</td>
+            <td>Parent height correctly wrap kar sakta hai</td>
+          </tr>
+          <tr>
+            <td>Old clearfix hack avoid karna hai</td>
+            <td>Single property se clean solution</td>
+          </tr>
+          <tr>
+            <td>Outer margin collapsing control chahiye</td>
+            <td>New formatting context margin behavior isolate karta hai</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip"><strong>&#9632; Practical Use:</strong> Aaj ke projects mein floats kam use hote hain, but
+      <ic>flow-root</ic> CSS interviews aur legacy layouts debug karne ke liye important hai.</div>
+  </div>
+
+  <div class="page new-page">
+    <div class="sec-label">// TOPIC 07 - DISPLAY CONTENTS</div>
+    <h2 class="sec-title">display: contents
+      <span class="desc">Wrapper ka box remove karna, children ko parent layout mein promote karna</span>
+    </h2>
+
+    <div class="what-box">
+      <div class="wlabel">Definition</div>
+      <p><ic>display: contents</ic> element ka apna box generate nahi karta. Uske children layout mein aise behave karte
+        hain jaise wrapper exist hi nahi karta, but HTML structure mein wrapper still present hota hai.</p>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>contents example</div>
+      <pre><code><span class="sel">.card-list</span> <span class="pn">{</span>
+  <span class="pr">display</span><span class="pn">:</span> <span class="vl">grid</span><span class="pn">;</span>
+  <span class="pr">grid-template-columns</span><span class="pn">:</span> <span class="vl">repeat(3, 1fr)</span><span class="pn">;</span>
+<span class="pn">}</span>
+
+<span class="sel">.wrapper</span> <span class="pn">{</span>
+  <span class="pr">display</span><span class="pn">:</span> <span class="vl">contents</span><span class="pn">;</span>
+<span class="pn">}</span></code></pre>
+    </div>
+
+    <h3 class="sh">Kab Use Kar Sakte Hain?</h3>
+    <p class="para">Kabhi-kabhi HTML mein wrapper semantic ya framework reason se zaroori hota hai, but layout mein us
+      wrapper ka box unwanted hota hai. Aise case mein <ic>display: contents</ic> children ko parent grid/flex mein
+      directly participate karwa sakta hai.</p>
+
+    <h3 class="sh">Important Limitations</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Limitation</th>
+            <th>Reason</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Background/border/padding wrapper par visible nahi hote</td>
+            <td>Wrapper ka own box generate nahi hota</td>
+          </tr>
+          <tr>
+            <td>Accessibility issues historically possible rahe hain</td>
+            <td>Some browser/screen reader combinations mein semantics affected ho sakte the</td>
+          </tr>
+          <tr>
+            <td>Pseudo-elements behavior tricky ho sakta hai</td>
+            <td>Element box absent hone se layout expectation change hoti hai</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn"><strong>&#9632; Careful:</strong> <ic>display: contents</ic> powerful hai, but normal daily layout
+      ke liye first choice nahi. Use tab karo jab wrapper box remove karna genuinely needed ho.</div>
+  </div>
+
+  <div class="page new-page">
+    <div class="sec-label">// TOPIC 08 - TABLE AND LIST DISPLAY</div>
+    <h2 class="sec-title">Table, List and Special Display Values
+      <span class="desc">HTML-like layout behavior CSS display se manually create karna</span>
+    </h2>
+
+    <h3 class="sh">1. display: list-item</h3>
+    <p class="para"><ic>display: list-item</ic> element ko list item ki tarah render karta hai, including marker/bullet.
+      Default <ic>li</ic> ka display list-item hota hai.</p>
+
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>custom list item</div>
+      <pre><code><span class="sel">.custom-point</span> <span class="pn">{</span>
+  <span class="pr">display</span><span class="pn">:</span> <span class="vl">list-item</span><span class="pn">;</span>
+  <span class="pr">list-style-position</span><span class="pn">:</span> <span class="vl">inside</span><span class="pn">;</span>
+  <span class="pr">list-style-type</span><span class="pn">:</span> <span class="vl">square</span><span class="pn">;</span>
+<span class="pn">}</span></code></pre>
+    </div>
+
+    <h3 class="sh">2. Table Display Values</h3>
+    <p class="para">CSS mein table-like layout values available hain, jaise <ic>table</ic>, <ic>table-row</ic>,
+      <ic>table-cell</ic>. Aaj ke modern layout mein Flexbox/Grid usually better hote hain, but old email templates,
+      equal height tricks aur legacy code mein yeh values mil sakti hain.</p>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Display Value</th>
+            <th>Similar HTML Element</th>
+            <th>Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>table</td>
+            <td>table</td>
+            <td>Table formatting context create karta hai</td>
+          </tr>
+          <tr>
+            <td>table-row</td>
+            <td>tr</td>
+            <td>Table row jaisa behavior</td>
+          </tr>
+          <tr>
+            <td>table-cell</td>
+            <td>td</td>
+            <td>Cell jaisa behavior, vertical-align useful</td>
+          </tr>
+          <tr>
+            <td>table-caption</td>
+            <td>caption</td>
+            <td>Caption jaisa behavior</td>
+          </tr>
+          <tr>
+            <td>table-header-group</td>
+            <td>thead</td>
+            <td>Header group behavior</td>
+          </tr>
+          <tr>
+            <td>table-footer-group</td>
+            <td>tfoot</td>
+            <td>Footer group behavior</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>table-cell vertical align</div>
+      <pre><code><span class="sel">.legacy-row</span> <span class="pn">{</span>
+  <span class="pr">display</span><span class="pn">:</span> <span class="vl">table</span><span class="pn">;</span>
+  <span class="pr">width</span><span class="pn">:</span> <span class="vl">100%</span><span class="pn">;</span>
+<span class="pn">}</span>
+
+<span class="sel">.legacy-cell</span> <span class="pn">{</span>
+  <span class="pr">display</span><span class="pn">:</span> <span class="vl">table-cell</span><span class="pn">;</span>
+  <span class="pr">vertical-align</span><span class="pn">:</span> <span class="vl">middle</span><span class="pn">;</span>
+<span class="pn">}</span></code></pre>
+    </div>
+
+    <div class="note"><strong>&#9632; Modern Rule:</strong> New projects mein normal layouts ke liye Grid/Flex use karo.
+      Table display values tab useful hain jab actual table-like behavior ya legacy compatibility needed ho.</div>
+  </div>
+
+  <div class="page new-page">
+    <div class="sec-label">// TOPIC 09 - TWO-VALUE DISPLAY SYNTAX</div>
+    <h2 class="sec-title">Advanced Display: Outer and Inner Values
+      <span class="desc">Modern CSS display ko outer box aur inner layout ke combination ki tarah samajhna</span>
+    </h2>
+
+    <div class="what-box">
+      <div class="wlabel">Advanced Concept</div>
+      <p>Modern CSS specification ke according display value do parts mein socha ja sakta hai: outer display type aur
+        inner display type. Outer decide karta hai element outside world ke saath kaise behave karega. Inner decide
+        karta hai children ka layout system kya hoga.</p>
+    </div>
+
+    <h3 class="sh">Outer vs Inner Display</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Part</th>
+            <th>Meaning</th>
+            <th>Examples</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Outer display</td>
+            <td>Element khud surrounding layout mein block hai ya inline</td>
+            <td>block, inline</td>
+          </tr>
+          <tr>
+            <td>Inner display</td>
+            <td>Element ke children ka layout mode kya hai</td>
+            <td>flow, flow-root, flex, grid, table</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sh">Old Single Values Ka Meaning</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Common Value</th>
+            <th>Modern Meaning</th>
+            <th>Explanation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>block</td>
+            <td>block flow</td>
+            <td>Outside block, inside normal flow</td>
+          </tr>
+          <tr>
+            <td>inline</td>
+            <td>inline flow</td>
+            <td>Outside inline, inside normal flow</td>
+          </tr>
+          <tr>
+            <td>inline-block</td>
+            <td>inline flow-root</td>
+            <td>Outside inline, inside independent block container</td>
+          </tr>
+          <tr>
+            <td>flex</td>
+            <td>block flex</td>
+            <td>Outside block, children flex items</td>
+          </tr>
+          <tr>
+            <td>inline-flex</td>
+            <td>inline flex</td>
+            <td>Outside inline, children flex items</td>
+          </tr>
+          <tr>
+            <td>grid</td>
+            <td>block grid</td>
+            <td>Outside block, children grid items</td>
+          </tr>
+          <tr>
+            <td>inline-grid</td>
+            <td>inline grid</td>
+            <td>Outside inline, children grid items</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>two-value syntax</div>
+      <pre><code><span class="sel">.box</span> <span class="pn">{</span>
+  <span class="pr">display</span><span class="pn">:</span> <span class="vl">block flow</span><span class="pn">;</span>   <span class="cm">/* same idea as block */</span>
+<span class="pn">}</span>
+
+<span class="sel">.chip</span> <span class="pn">{</span>
+  <span class="pr">display</span><span class="pn">:</span> <span class="vl">inline flex</span><span class="pn">;</span>  <span class="cm">/* similar to inline-flex */</span>
+<span class="pn">}</span>
+
+<span class="sel">.layout</span> <span class="pn">{</span>
+  <span class="pr">display</span><span class="pn">:</span> <span class="vl">block grid</span><span class="pn">;</span>   <span class="cm">/* similar to grid */</span>
+<span class="pn">}</span></code></pre>
+    </div>
+
+    <div class="note"><strong>&#9632; Compatibility Rule:</strong> Daily coding mein old values like <ic>flex</ic>,
+      <ic>grid</ic>, <ic>inline-flex</ic> still safest and most readable hain. Two-value syntax concept samajhne ke
+      liye important hai.</div>
+  </div>
+
+  <div class="page new-page">
+    <div class="sec-label">// TOPIC 10 - DISPLAY AND BOX MODEL</div>
+    <h2 class="sec-title">Display Property aur Box Model
+      <span class="desc">Width, height, margin, padding display ke saath kaise behave karte hain</span>
+    </h2>
+
+    <h3 class="sh">Block Formatting Behavior</h3>
+    <p class="para">Block elements parent ki available width fill karte hain. Agar <ic>width</ic> set karo, to remaining
+      horizontal space margins mein distribute ho sakta hai. Isi wajah se <ic>margin: auto</ic> block element ko center
+      kar sakta hai.</p>
+
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>block center</div>
+      <pre><code><span class="sel">.container</span> <span class="pn">{</span>
+  <span class="pr">display</span><span class="pn">:</span> <span class="vl">block</span><span class="pn">;</span>
+  <span class="pr">width</span><span class="pn">:</span> <span class="vl">min(90%, 1100px)</span><span class="pn">;</span>
+  <span class="pr">margin-inline</span><span class="pn">:</span> <span class="vl">auto</span><span class="pn">;</span>
+<span class="pn">}</span></code></pre>
+    </div>
+
+    <h3 class="sh">Inline Box Behavior</h3>
+    <p class="para">Inline elements text line boxes ke andar layout hote hain. Inka width/height directly set nahi hota,
+      kyunki size content aur line-height se aata hai. Agar button-like clickable area chahiye, inline-block ya
+      inline-flex better hai.</p>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Inline</th>
+            <th>Inline-Block</th>
+            <th>Block</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>width</td>
+            <td>Ignored</td>
+            <td>Works</td>
+            <td>Works</td>
+          </tr>
+          <tr>
+            <td>height</td>
+            <td>Ignored</td>
+            <td>Works</td>
+            <td>Works</td>
+          </tr>
+          <tr>
+            <td>padding-left/right</td>
+            <td>Works</td>
+            <td>Works</td>
+            <td>Works</td>
+          </tr>
+          <tr>
+            <td>padding-top/bottom</td>
+            <td>Visual effect, line layout tricky</td>
+            <td>Works cleanly</td>
+            <td>Works cleanly</td>
+          </tr>
+          <tr>
+            <td>margin-left/right</td>
+            <td>Works</td>
+            <td>Works</td>
+            <td>Works</td>
+          </tr>
+          <tr>
+            <td>margin-top/bottom</td>
+            <td>No normal layout push</td>
+            <td>Works</td>
+            <td>Works</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn"><strong>&#9632; Common Bug:</strong> <ic>a</ic> tag par padding diya but height/width expected
+      nahi aa rahi? Usko <ic>display: inline-block</ic> ya <ic>inline-flex</ic> karo.</div>
+  </div>
+
+  <div class="page new-page">
+    <div class="sec-label">// TOPIC 11 - RESPONSIVE PATTERNS</div>
+    <h2 class="sec-title">Real Projects Mein Display Ka Use
+      <span class="desc">Navbar, cards, mobile menu, center layout aur utility classes</span>
+    </h2>
+
+    <h3 class="sh">1. Navbar Layout</h3>
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>navbar pattern</div>
+      <pre><code><span class="sel">.nav</span> <span class="pn">{</span>
+  <span class="pr">display</span><span class="pn">:</span> <span class="vl">flex</span><span class="pn">;</span>
+  <span class="pr">align-items</span><span class="pn">:</span> <span class="vl">center</span><span class="pn">;</span>
+  <span class="pr">justify-content</span><span class="pn">:</span> <span class="vl">space-between</span><span class="pn">;</span>
+<span class="pn">}</span>
+
+<span class="sel">.nav-links</span> <span class="pn">{</span>
+  <span class="pr">display</span><span class="pn">:</span> <span class="vl">flex</span><span class="pn">;</span>
+  <span class="pr">gap</span><span class="pn">:</span> <span class="vl">1rem</span><span class="pn">;</span>
+<span class="pn">}</span></code></pre>
+    </div>
+
+    <h3 class="sh">2. Responsive Cards</h3>
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>card grid pattern</div>
+      <pre><code><span class="sel">.card-grid</span> <span class="pn">{</span>
+  <span class="pr">display</span><span class="pn">:</span> <span class="vl">grid</span><span class="pn">;</span>
+  <span class="pr">grid-template-columns</span><span class="pn">:</span> <span class="vl">repeat(auto-fit, minmax(240px, 1fr))</span><span class="pn">;</span>
+  <span class="pr">gap</span><span class="pn">:</span> <span class="vl">1.25rem</span><span class="pn">;</span>
+<span class="pn">}</span></code></pre>
+    </div>
+
+    <h3 class="sh">3. Mobile Menu Toggle</h3>
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>mobile display change</div>
+      <pre><code><span class="sel">.menu-button</span> <span class="pn">{</span>
+  <span class="pr">display</span><span class="pn">:</span> <span class="vl">none</span><span class="pn">;</span>
+<span class="pn">}</span>
+
+<span class="at">@media</span> <span class="pn">(</span><span class="pr">max-width</span><span class="pn">:</span> <span class="vl">768px</span><span class="pn">)</span> <span class="pn">{</span>
+  <span class="sel">.menu-button</span> <span class="pn">{</span>
+    <span class="pr">display</span><span class="pn">:</span> <span class="vl">inline-flex</span><span class="pn">;</span>
+  <span class="pn">}</span>
+
+  <span class="sel">.nav-links</span> <span class="pn">{</span>
+    <span class="pr">display</span><span class="pn">:</span> <span class="vl">none</span><span class="pn">;</span>
+  <span class="pn">}</span>
+
+  <span class="sel">.nav-links.is-open</span> <span class="pn">{</span>
+    <span class="pr">display</span><span class="pn">:</span> <span class="vl">flex</span><span class="pn">;</span>
+    <span class="pr">flex-direction</span><span class="pn">:</span> <span class="vl">column</span><span class="pn">;</span>
+  <span class="pn">}</span>
+<span class="pn">}</span></code></pre>
+    </div>
+
+    <h3 class="sh">4. Center Any Box</h3>
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>center patterns</div>
+      <pre><code><span class="sel">.center-with-flex</span> <span class="pn">{</span>
+  <span class="pr">display</span><span class="pn">:</span> <span class="vl">flex</span><span class="pn">;</span>
+  <span class="pr">align-items</span><span class="pn">:</span> <span class="vl">center</span><span class="pn">;</span>
+  <span class="pr">justify-content</span><span class="pn">:</span> <span class="vl">center</span><span class="pn">;</span>
+<span class="pn">}</span>
+
+<span class="sel">.center-with-grid</span> <span class="pn">{</span>
+  <span class="pr">display</span><span class="pn">:</span> <span class="vl">grid</span><span class="pn">;</span>
+  <span class="pr">place-items</span><span class="pn">:</span> <span class="vl">center</span><span class="pn">;</span>
+<span class="pn">}</span></code></pre>
+    </div>
+
+    <div class="note"><strong>&#9632; Real Project Rule:</strong> Layout ke parent par display set hota hai. Agar children
+      align nahi ho rahe, check karo property parent par lagni chahiye ya child par.</div>
+  </div>
+
+  <div class="page new-page">
+    <div class="sec-label">// QUICK REFERENCE</div>
+    <h2 class="sec-title">CSS Display Property - Complete Summary
+      <span class="desc">Revision ke liye all important display values ek jagah</span>
+    </h2>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Display Value</th>
+            <th>Meaning</th>
+            <th>Best Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>block</td>
+            <td>New line, full available width</td>
+            <td>Containers, sections, cards</td>
+          </tr>
+          <tr>
+            <td>inline</td>
+            <td>Text flow ke andar, content width</td>
+            <td>Span, links, text formatting</td>
+          </tr>
+          <tr>
+            <td>inline-block</td>
+            <td>Inline outside, block-like sizing</td>
+            <td>Buttons, badges, chips</td>
+          </tr>
+          <tr>
+            <td>none</td>
+            <td>Element layout se remove</td>
+            <td>Hide/show UI, mobile menus</td>
+          </tr>
+          <tr>
+            <td>flex</td>
+            <td>Block-level flex container</td>
+            <td>Navbar, row/column alignment</td>
+          </tr>
+          <tr>
+            <td>inline-flex</td>
+            <td>Inline-level flex container</td>
+            <td>Icon buttons, pills, compact controls</td>
+          </tr>
+          <tr>
+            <td>grid</td>
+            <td>Block-level grid container</td>
+            <td>Cards, page layouts, galleries</td>
+          </tr>
+          <tr>
+            <td>inline-grid</td>
+            <td>Inline-level grid container</td>
+            <td>Small inline two-dimensional layouts</td>
+          </tr>
+          <tr>
+            <td>flow-root</td>
+            <td>New block formatting context</td>
+            <td>Float clearing, formatting isolation</td>
+          </tr>
+          <tr>
+            <td>contents</td>
+            <td>Wrapper box remove, children promoted</td>
+            <td>Advanced wrapper/layout fixes</td>
+          </tr>
+          <tr>
+            <td>list-item</td>
+            <td>List marker ke saath item box</td>
+            <td>Custom list-like elements</td>
+          </tr>
+          <tr>
+            <td>table / table-row / table-cell</td>
+            <td>Table-like formatting</td>
+            <td>Legacy layouts, table behavior</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sh">Fast Decision Guide</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Question</th>
+            <th>Choose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Element next line par full width lena chahiye?</td>
+            <td>block</td>
+          </tr>
+          <tr>
+            <td>Element text ke beech same line mein rehna chahiye?</td>
+            <td>inline</td>
+          </tr>
+          <tr>
+            <td>Same line but width/height/padding control chahiye?</td>
+            <td>inline-block</td>
+          </tr>
+          <tr>
+            <td>Direct children row/column mein align karne hain?</td>
+            <td>flex</td>
+          </tr>
+          <tr>
+            <td>Rows and columns dono control karne hain?</td>
+            <td>grid</td>
+          </tr>
+          <tr>
+            <td>Element completely hide karna hai, space bhi nahi chahiye?</td>
+            <td>display: none</td>
+          </tr>
+          <tr>
+            <td>Element hide karna hai but space preserve chahiye?</td>
+            <td>visibility: hidden</td>
+          </tr>
+          <tr>
+            <td>Fade animation chahiye?</td>
+            <td>opacity + visibility + pointer-events</td>
+          </tr>
+          <tr>
+            <td>Float parent collapse fix karna hai?</td>
+            <td>flow-root</td>
+          </tr>
+          <tr>
+            <td>Wrapper ka box remove karna hai?</td>
+            <td>contents</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sh">Best Practices - Yaad Rakhna</h3>
+    <div class="two-col">
+      <div class="info-card">
+        <div class="ic-head" style="color:var(--green);">DO</div>
+        <div class="ic-body">
+          Layout parent par display set karo.<br>
+          Buttons ke liye inline-flex/inline-block use karo.<br>
+          Cards ke liye grid useful hota hai.<br>
+          Navbar ke liye flex clean hota hai.<br>
+          Hidden UI mein accessibility test karo.<br>
+          display value ka computed style inspect karo.
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="ic-head" style="color:var(--accent);">AVOID</div>
+        <div class="ic-body">
+          Inline elements par width/height expect karna.<br>
+          display none ko fade animation ke liye use karna.<br>
+          Har layout ko inline-block se banana.<br>
+          contents blindly use karna.<br>
+          Flex/Grid properties child par lagakar result expect karna.<br>
+          Visibility aur opacity ko display none samajhna.
+        </div>
+      </div>
+    </div>
+
+    <div
+      style="margin-top:40px; padding:24px; background:var(--bg2); border:1px solid var(--border); border-radius:4px;">
+      <p
+        style="font-size:13px; color:var(--text2); margin-bottom:14px; font-family:'JetBrains Mono',monospace; letter-spacing:1px;">
+        &gt; NEXT TOPICS TO COVER</p>
+      <div style="display:flex; flex-wrap:wrap; gap:8px;">
+        <span class="t-pill">Flexbox Deep Dive</span>
+        <span class="t-pill">CSS Grid</span>
+        <span class="t-pill">Positioning</span>
+        <span class="t-pill">Overflow</span>
+        <span class="t-pill">Z-index</span>
+        <span class="t-pill">Responsive Navbar</span>
+        <span class="t-pill">Media Queries</span>
+        <span class="t-pill">Layout Debugging</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Made with <span>&#9829;</span> for Web Development Course learners<br>
+    Shauray ke saath CSS seekhte raho &#128640; &nbsp;|&nbsp; Topic 07 - CSS Display Property
+  </div>
+</body>
+
+</html>

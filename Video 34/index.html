@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS - Float and Clear</title>
+    <style>
+        img {
+            /* Is this means (float: left;) this is alow to right content of its right and it self in left. This right also a oposite of this same to same. */
+            float: right;
+        }
+
+        .cards {
+            border: 2px solid black;
+
+            /* This element help to, don't float element outside the container or border */
+            display: flow-root;
+        }
+
+        .card {
+            border: 2px solid red;
+        }
+
+        .card:nth-child(3) {
+            background-color: aqua;
+
+            /* Is this means: this is not alow to float of content in it section have. Right means not allow in right side but also allow in left side and its opposite of Left, but in Both means not allow in both side left and right. */
+            clear: right;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="cards">
+        <img src="https://cdn.pixabay.com/photo/2020/08/11/03/08/boat-5479122_1280.jpg" alt="A man with boat in lake"
+            width="264px">
+        <div class="card">
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illum eaque quidem omnis voluptatum hic
+                doloribus tempore adipisci consequatur ducimus soluta consectetur exercitationem odit tenetur, eum totam
+                natus mollitia placeat, id molestiae! Sequi eius cum nobis velit odio delectus, atque soluta distinctio
+                incidunt, repellendus dolorum! Reprehenderit.</p>
+        </div>
+        <div class="card">
+            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolores odit iusto deleniti? Ad eaque possimus
+                fuga. Ipsam maxime non at veniam eligendi quasi illum similique placeat reiciendis, culpa doloribus
+                natus est? Cupiditate nihil, vel at magnam iusto consequatur veniam quas explicabo, facilis ut laborum,
+                deserunt blanditiis aliquid! Quidem numquam veritatis laborum voluptas quod quam ipsam, fugiat unde nemo
+                repellat sapiente explicabo cum earum natus quo sunt reprehenderit delectus amet sit. Neque assumenda
+                laboriosam nisi pariatur quae? Cumque aut doloremque provident deserunt, ducimus nulla quisquam nesciunt
+                expedita voluptate dolor in at, recusandae excepturi animi minima itaque eligendi dolore maxime adipisci
+                ad error saepe. Facere, obcaecati excepturi? Commodi doloribus alias in incidunt enim tempore placeat
+                impedit veniam exercitationem assumenda molestiae consequatur et quo quam distinctio necessitatibus cum,
+                ex fuga ipsam quas ipsa cumque? Minima veritatis possimus libero laudantium? Perferendis, praesentium
+                error obcaecati ad voluptatum ratione, animi consequatur quo consectetur odit architecto quia eum
+                libero? Quisquam, expedita. Nisi repellendus, doloribus, hic tempore dolor quasi modi cum tempora quod
+                labore officiis voluptatum, corrupti aperiam. Animi odio vitae mollitia, voluptatibus ea quae dolor quas
+                facere unde alias enim expedita obcaecati, magni ex quibusdam laudantium error tempora quisquam quia
+                officiis voluptatum. Sed eius laborum quae vel autem numquam laboriosam repudiandae ad amet debitis
+                doloribus, fuga cumque sint magni sunt, omnis, earum eos officiis ab ex harum itaque enim excepturi. Qui
+                voluptas odio ea, placeat neque doloribus quia omnis. Similique praesentium facere in nihil minima, sunt
+                minus accusantium consequuntur explicabo nulla nemo laudantium iusto a. Corporis cum dolorum veritatis
+                vel delectus odio rerum culpa aliquam in minima quam, dignissimos, minus quisquam.</p>
+        </div>
+        <div class="card">Card 3</div>
+    </div>
+
+</body>
+
+</html>

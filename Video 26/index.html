@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS - Overflow</title>
+    <style>
+        .box{
+            width: 30vw;
+            height: 30vh;
+            border: 2px solid black;
+            /* overflow: scroll; */
+
+            /* overflow karegga toh scroll bar show karega nato nahi karega */
+            /* overflow: auto; */
+
+            /* Sara content ko ek horizantal line me kar dega */
+            /* white-space: nowrap; */
+
+            /* Jitne bhi text - Overflow karega (....) like (I am a good boy.And i am .....) Me show karega */
+            /* text-overflow: ellipsis; */
+            /* overflow-x: hidden; */
+            /* overflow-x: scroll; */
+            overflow: hidden auto;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        Hey, today i learn overflow in css. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor nisi unde distinctio ratione dignissimos natus quidem vel autem numquam enim saepe porro voluptatem fugiat, quam commodi ipsam laborum adipisci! Sapiente porro possimus dignissimos aliquam quisquam natus fuga, itaque incidunt vero, sint, id tenetur voluptas facere! Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo similique perferendis, sint excepturi molestias labore, enim obcaecati libero alias, maiores laboriosam dignissimos! Temporibus.
+    </div>
+
+</body>
+
+</html>

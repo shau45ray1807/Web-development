@@ -1,0 +1,110 @@
+<!-- Task 3 Very Hard
+Tech Product Landing Page banao
+
+Kisi bhi tech product ki landing page banao — jaise ek coding course, ek app, ya ek gadget. Page mein product info, features, FAQ, aur contact section hona chahiye. Yeh sabse complex task hai — saare semantic aur meta tags ek saath use karne hain.
+
+Semantic tags zaroori: <header>, <nav>, <main>, <article>, <section> (3+ sections), <aside>, <figure> + <figcaption>, <details> + <summary> (FAQ ke liye), <footer>, <address>, <time>, <mark>, <meter> ya <progress>
+
+Meta tags zaroori: charset, viewport, description, keywords, author, robots, canonical, og:title, og:description, og:image, og:url, og:type
+
+Extra: <abbr>, <blockquote> + <cite> (ek user testimonial), <address> footer mein -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Discover a coding course with codewithharry">
+    <meta name="keywords" content="Coding Course, Programming Language, Coding, HTML, CSS, JavaScript, Python">
+    <meta name="author" content="Shauray Sharma">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.codewithharry.com">
+
+    <meta property="og:title" content="codewithharry">
+    <meta property="og:description" content=" Exploar your coding jounry with codewithharry">
+    <meta property="og:image" content="https://www.codewithharry.com/image/free_coding_course_img.png">
+    <meta property="og:url" content="https://www.codewithharry.com">
+    <meta property="og:type" content="Website">
+    <title>codewithharry - Learn Coding</title>
+</head>
+
+<body>
+    <header>
+        <h1>CodeWithHarry</h1>
+        <nav>
+            <a href="#course-info"> Course Info</a>
+            <a href="#features">Features</a>
+            <a href="#faq">FAQ</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+    <main>
+        <section id="course-info">
+            <h2>Course Info</h2>
+            <p>Learn coding with our comprehensive course, and do masters pf programming languages like <abbr title="HyperText Markup Language">HTML</abbr>, <abbr title="Cascading Style Sheet">CSS</abbr>, <abbr title="JavaScript">JS</abbr>, and Python.</p>
+            <figure>
+                <img src="free_coding_course_img.png" alt="Course thumbnail">
+                <figcaption>Free Coding Course - CodeWithHarry</figcaption>
+            </figure>
+        </section>
+        <section id="features">
+            <h2>Features</h2>
+            <article>
+                <header>
+                    <h3>Structured Curriculum</h3>
+                </header>
+                <section>
+                    <ul>
+                        <li>Intractive Coding Experience</li>
+                        <li>Real-World Projects</li>
+                        <li>24/7 Doubts Solving Support</li>
+                        <li>Certification upon Completion</li>
+                        <li>Progress Tracking</li>
+                    </ul>
+                    <h4>Progress Tracking</h4>
+                    <p>Completion Level:</p>
+                    <progress value="90" max="100"></progress>
+
+                    <blockquote>
+                        <p>This course is completely change my career!</p>
+                        <cite>Sagar Thakur</cite>
+                    </blockquote>
+
+                </section>
+            </article>
+        </section>
+        <section id="faq">
+            <h2>FAQ</h2>
+            <details>
+                <summary>What is the duration of the course?</summary>
+                <p>The course is designed to be completed in <time datetime="P5M">5 months</time>, with each week focusing on a specific topic.</p>
+            </details>
+            <details>
+                <summary>What is the course structure?</summary>
+                <p>The course is structured to provide a comprehensive learning experience, starting with the basics and gradually progressing to advanced topics.</p>
+            </details>
+            <details>
+                <summary>How much does it cost, of this course?</summary>
+                <p>The course is completely free to enroll in, and you can access all the content without any hidden charges.</p>
+            </details>
+        </section>
+        <aside>
+            <h2>Quick Info</h2>
+            <p>Level: Beginner to Advanced</p>
+            <p>Duration: <time datetime="P5M">5 months</time></p>
+            <p>Course is <mark>100% Free</mark> to enroll in.</p>
+        </aside>
+    </main>
+    <footer id="contact">
+        <h2>Contact Us</h2>
+        <p>If you have any questions or need assistance, feel free to reach out to us!</p>
+        <p>&copy; 2026 CodeWithHarry. All rights reserved.</p>
+        <address>
+            <a href="mailto:CodeWithHarry@gmail.com">E - mail: CodeWithHarry@gmail.com</a>
+        </address>
+    </footer>
+
+</body>
+
+</html>

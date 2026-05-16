@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS - Specificity and Cascade</title>
+    <style>
+        /* The specificity of this selector is 1 */
+        h1 {
+            color: aqua;
+        }
+
+        /* The specificity of this selector is 10 */
+        .yellow {
+            color: yellow;
+        }
+
+        /* The specificity of this selector is 10 */
+        .cred {
+            color: red;
+        }
+
+        /* The specificity of this selector is 10 */
+        .cpurple {
+            color: purple;
+        }
+
+        /* This is an example of attibute selector, the specificity of this selector is 10 */
+        [data-x="a"] {
+            background-color: aqua;
+        }
+
+        /* The specificity if this selector is 1 + 10 = 11 */
+        h1.yellow {
+            color: red;
+        }
+
+        /* The specificity of this selector is 1 + 10 + 10 + 10 + 10 = 41 */
+        a.harryclass.rohan-class[herf]:hover {
+            color: blue;
+        }
+
+        p {
+            color: rgba(97, 4, 4, 0.507) !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <h1 class="yellow cred cpurple" data-x="a">Hey, today i'm learning about CSS specificity and cascade.</h1>
+    </div>
+
+    <div>
+        <h1>Specificity Calculation:</h1>
+        <ul>
+            <li>Universal Selector: 10</li>
+            <li>Element or Pseudo-element Selector: 10</li>
+            <li>Class or Attribute or Pseudo-class Selector: 10</li>
+            <li>ID Selector: 100</li>
+            <li>Inline Styles: 1000</li>
+            <p>So, the order of specificity is: </p>
+            <p>Inline Style > ID Slector > Class Selector > Element Selector</p>
+            <p>"!important" declarations have higher specificity compared to other declarations.</p>
+        </ul>
+    </div>
+
+</body>
+
+</html>

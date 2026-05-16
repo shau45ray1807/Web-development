@@ -1,0 +1,1398 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Notes - Position Property</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,600;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap');
+
+    :root {
+      --bg: #0a0f1e;
+      --bg2: #0d1b2a;
+      --bg3: #0f2340;
+      --bg4: #071120;
+      --accent: #e94560;
+      --green: #06d6a0;
+      --yellow: #ffd166;
+      --blue: #00b4d8;
+      --purple: #9d4edd;
+      --orange: #f77f00;
+      --text: #e8eaf6;
+      --text2: #a8b2d8;
+      --border: #1e3a5f;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Syne', sans-serif;
+      font-size: 15px;
+      line-height: 1.75;
+    }
+
+    .new-page {
+      page-break-before: always;
+      break-before: page;
+    }
+
+    .cover {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: linear-gradient(160deg, #0a0f1e 0%, #0d1b2a 60%, #0f2340 100%);
+      border-bottom: 3px solid var(--accent);
+      padding: 60px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cover::before {
+      content: '';
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0, 180, 216, 0.08) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .cover-badge {
+      background: var(--accent);
+      color: #fff;
+      padding: 5px 18px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+      display: inline-block;
+    }
+
+    .cover h1 {
+      font-size: 68px;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1;
+      letter-spacing: -3px;
+      margin-bottom: 12px;
+    }
+
+    .cover h1 span {
+      color: var(--blue);
+    }
+
+    .cover-subtitle {
+      font-size: 18px;
+      color: var(--text2);
+      margin-bottom: 6px;
+    }
+
+    .cover-course {
+      font-size: 13px;
+      color: var(--yellow);
+      letter-spacing: 1.5px;
+      margin-bottom: 50px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .topics-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      max-width: 780px;
+    }
+
+    .t-pill {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--text2);
+      padding: 5px 14px;
+      font-size: 12px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .page {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 60px 40px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sec-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    h2.sec-title {
+      font-size: 32px;
+      font-weight: 800;
+      color: #fff;
+      border-left: 4px solid var(--blue);
+      padding-left: 16px;
+      margin-bottom: 6px;
+      line-height: 1.2;
+    }
+
+    h2.sec-title .desc {
+      display: block;
+      font-size: 13px;
+      color: var(--text2);
+      font-weight: 400;
+      letter-spacing: 0.5px;
+      margin-top: 5px;
+    }
+
+    .what-box {
+      background: var(--bg2);
+      border-left: 3px solid var(--blue);
+      padding: 16px 20px;
+      margin: 24px 0;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .what-box .wlabel {
+      font-size: 10px;
+      color: var(--blue);
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .what-box p {
+      color: var(--text2);
+      font-size: 14px;
+    }
+
+    .tip,
+    .note,
+    .warn {
+      padding: 12px 18px;
+      margin: 18px 0;
+      border-radius: 0 4px 4px 0;
+      font-size: 13.5px;
+    }
+
+    .tip {
+      background: rgba(6, 214, 160, 0.08);
+      border-left: 3px solid var(--green);
+      color: var(--green);
+    }
+
+    .note {
+      background: rgba(255, 209, 102, 0.08);
+      border-left: 3px solid var(--yellow);
+      color: var(--yellow);
+    }
+
+    .warn {
+      background: rgba(233, 69, 96, 0.08);
+      border-left: 3px solid var(--accent);
+      color: var(--accent);
+    }
+
+    .tip strong,
+    .note strong,
+    .warn strong {
+      font-weight: 700;
+      margin-right: 6px;
+    }
+
+    .code-wrap {
+      margin: 20px 0;
+    }
+
+    .code-label {
+      background: var(--bg3);
+      padding: 6px 14px;
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text2);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+    }
+
+    .dot-r {
+      background: #e94560;
+    }
+
+    .dot-y {
+      background: #ffd166;
+    }
+
+    .dot-g {
+      background: #06d6a0;
+    }
+
+    pre {
+      background: var(--bg4);
+      border: 1px solid var(--border);
+      padding: 20px 22px;
+      overflow-x: auto;
+      border-top: none;
+    }
+
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      line-height: 1.9;
+    }
+
+    .pr {
+      color: #00b4d8;
+    }
+
+    .vl {
+      color: #06d6a0;
+    }
+
+    .cm {
+      color: #4a6080;
+      font-style: italic;
+    }
+
+    .tg {
+      color: #ffd166;
+    }
+
+    .at {
+      color: #9d4edd;
+    }
+
+    .pn {
+      color: #a8b2d8;
+    }
+
+    .sel {
+      color: #f77f00;
+    }
+
+    .tbl-wrap {
+      margin: 20px 0;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+    }
+
+    thead tr {
+      background: var(--bg3);
+    }
+
+    th {
+      padding: 10px 16px;
+      text-align: left;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--blue);
+      letter-spacing: 1px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    td {
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text2);
+      vertical-align: top;
+    }
+
+    td:first-child {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--yellow);
+      font-size: 13px;
+    }
+
+    tbody tr:hover {
+      background: var(--bg2);
+    }
+
+    ic {
+      background: var(--bg3);
+      color: var(--yellow);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12.5px;
+      padding: 1px 7px;
+      border-radius: 3px;
+      border: 1px solid var(--border);
+    }
+
+    h3.sh {
+      font-size: 17px;
+      font-weight: 700;
+      color: #fff;
+      margin: 30px 0 12px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    h3.sh::before {
+      content: '\25A0';
+      color: var(--accent);
+      font-size: 10px;
+    }
+
+    p.para {
+      color: var(--text2);
+      margin: 10px 0;
+      font-size: 14.5px;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 20px 0;
+    }
+
+    .info-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .info-card .ic-head {
+      padding: 8px 14px;
+      font-size: 11px;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 1px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg3);
+    }
+
+    .info-card .ic-body {
+      padding: 14px 16px;
+      font-size: 13px;
+      color: var(--text2);
+      line-height: 1.8;
+    }
+
+    .demo-box {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 20px 24px;
+      margin: 16px 0;
+    }
+
+    .demo-label {
+      font-size: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text2);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .stage {
+      position: relative;
+      min-height: 220px;
+      border: 1px dashed var(--border);
+      background:
+        linear-gradient(rgba(30, 58, 95, 0.35) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(30, 58, 95, 0.35) 1px, transparent 1px);
+      background-size: 28px 28px;
+      padding: 18px;
+      overflow: hidden;
+    }
+
+    .pos-card {
+      width: 132px;
+      min-height: 62px;
+      padding: 12px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+    }
+
+    .normal-card {
+      background: rgba(0, 180, 216, 0.16);
+      border-color: var(--blue);
+    }
+
+    .relative-card {
+      position: relative;
+      top: 18px;
+      left: 30px;
+      background: rgba(6, 214, 160, 0.14);
+      border-color: var(--green);
+    }
+
+    .absolute-card {
+      position: absolute;
+      right: 24px;
+      top: 36px;
+      background: rgba(233, 69, 96, 0.16);
+      border-color: var(--accent);
+    }
+
+    .fixed-card {
+      position: absolute;
+      right: 22px;
+      bottom: 22px;
+      background: rgba(157, 78, 221, 0.16);
+      border-color: var(--purple);
+    }
+
+    .sticky-demo {
+      height: 250px;
+      overflow-y: auto;
+      border: 1px solid var(--border);
+      background: var(--bg4);
+      padding: 0 14px 14px;
+    }
+
+    .sticky-head {
+      position: sticky;
+      top: 0;
+      background: var(--accent);
+      color: #fff;
+      padding: 8px 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      z-index: 2;
+    }
+
+    .sticky-demo p {
+      margin: 12px 0;
+      color: var(--text2);
+      font-size: 13px;
+    }
+
+    .layer-demo {
+      position: relative;
+      height: 170px;
+      border: 1px dashed var(--border);
+      background: var(--bg4);
+    }
+
+    .layer {
+      position: absolute;
+      width: 140px;
+      height: 88px;
+      display: grid;
+      place-items: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+
+    .layer-a {
+      left: 60px;
+      top: 28px;
+      background: var(--blue);
+      z-index: 1;
+    }
+
+    .layer-b {
+      left: 135px;
+      top: 58px;
+      background: var(--accent);
+      z-index: 3;
+    }
+
+    .layer-c {
+      left: 215px;
+      top: 20px;
+      background: var(--green);
+      z-index: 2;
+      color: #052019;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 40px;
+      color: var(--text2);
+      font-size: 13px;
+      font-family: 'JetBrains Mono', monospace;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer span {
+      color: var(--accent);
+    }
+
+    @media (max-width: 720px) {
+      .cover h1 {
+        font-size: 44px;
+        letter-spacing: -1px;
+      }
+
+      .page {
+        padding: 44px 22px;
+      }
+
+      h2.sec-title {
+        font-size: 26px;
+      }
+
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+
+      .layer-a {
+        left: 20px;
+      }
+
+      .layer-b {
+        left: 95px;
+      }
+
+      .layer-c {
+        left: 155px;
+      }
+    }
+
+    @media print {
+      @page {
+        size: A4;
+        margin: 12mm;
+      }
+
+      body {
+        background: var(--bg);
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .cover {
+        min-height: 100vh;
+        page-break-after: always;
+        break-after: page;
+      }
+
+      .page {
+        max-width: none;
+        padding: 26px 18px;
+        border-bottom: none;
+        page-break-before: always;
+        break-before: page;
+      }
+
+      .what-box,
+      .tip,
+      .note,
+      .warn,
+      .code-wrap,
+      .tbl-wrap,
+      .info-card,
+      .demo-box {
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+
+      pre {
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="cover">
+    <div class="cover-badge">&#9632; Complete Notes - Topic 11</div>
+    <h1>CSS <span>Position</span><br>Property</h1>
+    <p class="cover-subtitle">Elements ko normal flow, viewport aur parent ke according place karna - Basic se Advanced tak</p>
+    <p class="cover-course">Web Development Course - Shauray</p>
+    <div class="topics-list">
+      <span class="t-pill">position</span>
+      <span class="t-pill">static</span>
+      <span class="t-pill">relative</span>
+      <span class="t-pill">absolute</span>
+      <span class="t-pill">fixed</span>
+      <span class="t-pill">sticky</span>
+      <span class="t-pill">top/right/bottom/left</span>
+      <span class="t-pill">inset</span>
+      <span class="t-pill">z-index</span>
+      <span class="t-pill">stacking context</span>
+    </div>
+  </div>
+
+  <div class="page new-page">
+    <div class="sec-label">// TOPIC 01 - POSITION BASICS</div>
+    <h2 class="sec-title">Position Property Kya Hai?
+      <span class="desc">Element page mein kahan aur kaise place hoga</span>
+    </h2>
+
+    <div class="what-box">
+      <div class="wlabel">Simple Definition</div>
+      <p><ic>position</ic> CSS property decide karti hai ki element normal document flow mein rahega ya usko offset
+        properties jaise <ic>top</ic>, <ic>right</ic>, <ic>bottom</ic>, <ic>left</ic> ke help se move kiya ja sakta hai.</p>
+    </div>
+
+    <p class="para">Default layout mein elements normal flow follow karte hain: block elements ek ke neeche ek, inline
+      elements line ke andar. Position property is normal flow ko control ya modify karti hai. Isse badges, tooltips,
+      modals, sticky headers, fixed buttons, overlays aur precise UI elements banana possible hota hai.</p>
+
+    <h3 class="sh">Position Values</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Value</th>
+            <th>Meaning</th>
+            <th>Common Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>static</td>
+            <td>Default position, normal flow</td>
+            <td>Normal content layout</td>
+          </tr>
+          <tr>
+            <td>relative</td>
+            <td>Normal place se offset hota hai</td>
+            <td>Small shifts, absolute child ka parent</td>
+          </tr>
+          <tr>
+            <td>absolute</td>
+            <td>Nearest positioned ancestor ke according place hota hai</td>
+            <td>Badges, tooltips, overlays</td>
+          </tr>
+          <tr>
+            <td>fixed</td>
+            <td>Viewport ke according fixed rehta hai</td>
+            <td>Fixed navbar, floating button</td>
+          </tr>
+          <tr>
+            <td>sticky</td>
+            <td>Normal flow + scroll threshold ke baad stick</td>
+            <td>Sticky header, section label</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>basic syntax</div>
+      <pre><code><span class="sel">.box</span> <span class="pn">{</span>
+  <span class="pr">position</span><span class="pn">:</span> <span class="vl">relative</span><span class="pn">;</span>
+  <span class="pr">top</span><span class="pn">:</span> <span class="vl">20px</span><span class="pn">;</span>
+  <span class="pr">left</span><span class="pn">:</span> <span class="vl">30px</span><span class="pn">;</span>
+<span class="pn">}</span></code></pre>
+    </div>
+
+    <div class="note"><strong>&#9632; Core Rule:</strong> <ic>top/right/bottom/left</ic> properties normally tabhi kaam
+      karti hain jab element ka position <ic>static</ic> ke alawa kuch aur ho.</div>
+  </div>
+
+  <div class="page new-page">
+    <div class="sec-label">// TOPIC 02 - STATIC POSITION</div>
+    <h2 class="sec-title">position: static
+      <span class="desc">Default layout behavior jahan offsets ka effect nahi hota</span>
+    </h2>
+
+    <div class="what-box">
+      <div class="wlabel">Definition</div>
+      <p><ic>static</ic> every element ka default position value hota hai. Static element normal document flow follow
+        karta hai, aur <ic>top</ic>, <ic>right</ic>, <ic>bottom</ic>, <ic>left</ic>, <ic>z-index</ic> jaise positional
+        controls normally apply nahi hote.</p>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>static example</div>
+      <pre><code><span class="sel">.box</span> <span class="pn">{</span>
+  <span class="pr">position</span><span class="pn">:</span> <span class="vl">static</span><span class="pn">;</span>
+  <span class="pr">top</span><span class="pn">:</span> <span class="vl">40px</span><span class="pn">;</span> <span class="cm">/* no effect */</span>
+  <span class="pr">left</span><span class="pn">:</span> <span class="vl">40px</span><span class="pn">;</span> <span class="cm">/* no effect */</span>
+<span class="pn">}</span></code></pre>
+    </div>
+
+    <h3 class="sh">Static Kab Use Hota Hai?</h3>
+    <p class="para">Mostly explicitly likhne ki zarurat nahi hoti, kyunki default static hi hota hai. Lekin kabhi-kabhi
+      kisi component ka previously positioned behavior reset karna ho, to <ic>position: static</ic> useful hota hai.</p>
+
+    <div class="demo-box">
+      <div class="demo-label">normal flow demo</div>
+      <div class="stage">
+        <div class="pos-card normal-card">box 1<br>static</div>
+        <div class="pos-card normal-card">box 2<br>normal flow</div>
+        <div class="pos-card normal-card">box 3<br>below previous</div>
+      </div>
+    </div>
+
+    <div class="tip"><strong>&#9632; Beginner Tip:</strong> Position property tab use karo jab real placement control
+      chahiye. Normal layout ke liye Flexbox, Grid, margin aur padding zyada clean solutions hote hain.</div>
+  </div>
+
+  <div class="page new-page">
+    <div class="sec-label">// TOPIC 03 - RELATIVE POSITION</div>
+    <h2 class="sec-title">position: relative
+      <span class="desc">Element apni original jagah reserve rakhta hai, par visually move hota hai</span>
+    </h2>
+
+    <div class="what-box">
+      <div class="wlabel">Definition</div>
+      <p><ic>relative</ic> element ko uski normal position se offset karta hai. Important baat: element ki original space
+        document flow mein reserved rehti hai, sirf visual box move hota hai.</p>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>relative example</div>
+      <pre><code><span class="sel">.badge</span> <span class="pn">{</span>
+  <span class="pr">position</span><span class="pn">:</span> <span class="vl">relative</span><span class="pn">;</span>
+  <span class="pr">top</span><span class="pn">:</span> <span class="vl">10px</span><span class="pn">;</span>
+  <span class="pr">left</span><span class="pn">:</span> <span class="vl">20px</span><span class="pn">;</span>
+<span class="pn">}</span></code></pre>
+    </div>
+
+    <div class="demo-box">
+      <div class="demo-label">relative shift demo</div>
+      <div class="stage">
+        <div class="pos-card normal-card">normal box</div>
+        <div class="pos-card relative-card">relative<br>top + left</div>
+        <div class="pos-card normal-card">next box</div>
+      </div>
+    </div>
+
+    <h3 class="sh">Relative Ke 2 Main Uses</h3>
+    <div class="two-col">
+      <div class="info-card">
+        <div class="ic-head" style="color:var(--blue);">SMALL VISUAL SHIFT</div>
+        <div class="ic-body">
+          Kisi element ko thoda sa move karna, jaise icon alignment, badge position, decorative offset.
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="ic-head" style="color:var(--green);">ABSOLUTE CHILD PARENT</div>
+        <div class="ic-body">
+          Parent par position relative lagakar child ko absolute position karna. Ye most common professional pattern hai.
+        </div>
+      </div>
+    </div>
+
+    <div class="warn"><strong>&#9632; Common Confusion:</strong> Relative element move hone ke baad bhi original space
+      occupy karta hai. Isliye next elements uski visual new position ke according adjust nahi hote.</div>
+  </div>
+
+  <div class="page new-page">
+    <div class="sec-label">// TOPIC 04 - ABSOLUTE POSITION</div>
+    <h2 class="sec-title">position: absolute
+      <span class="desc">Element normal flow se bahar nikal kar positioned ancestor ke according place hota hai</span>
+    </h2>
+
+    <div class="what-box">
+      <div class="wlabel">Definition</div>
+      <p><ic>absolute</ic> element normal document flow se remove ho jata hai. Yeh apne nearest positioned ancestor
+        ke according place hota hai. Positioned ancestor ka matlab parent/ancestor jiska position <ic>static</ic> nahi hai.</p>
+    </div>
+
+    <h3 class="sh">Parent Relative, Child Absolute Pattern</h3>
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>absolute inside relative parent</div>
+      <pre><code><span class="sel">.card</span> <span class="pn">{</span>
+  <span class="pr">position</span><span class="pn">:</span> <span class="vl">relative</span><span class="pn">;</span>
+<span class="pn">}</span>
+
+<span class="sel">.card-badge</span> <span class="pn">{</span>
+  <span class="pr">position</span><span class="pn">:</span> <span class="vl">absolute</span><span class="pn">;</span>
+  <span class="pr">top</span><span class="pn">:</span> <span class="vl">12px</span><span class="pn">;</span>
+  <span class="pr">right</span><span class="pn">:</span> <span class="vl">12px</span><span class="pn">;</span>
+<span class="pn">}</span></code></pre>
+    </div>
+
+    <div class="demo-box">
+      <div class="demo-label">absolute positioning demo</div>
+      <div class="stage">
+        <div class="pos-card normal-card">parent area<br>position: relative</div>
+        <div class="pos-card absolute-card">absolute<br>top/right</div>
+      </div>
+    </div>
+
+    <h3 class="sh">Absolute Element Ka Behavior</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Behavior</th>
+            <th>Explanation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Flow se removed</td>
+            <td>Dusre elements absolute element ke liye space reserve nahi karte</td>
+          </tr>
+          <tr>
+            <td>Containing block</td>
+            <td>Nearest non-static ancestor ke box ke according offsets apply hote hain</td>
+          </tr>
+          <tr>
+            <td>No positioned parent?</td>
+            <td>Element initial containing block/page ke according place ho sakta hai</td>
+          </tr>
+          <tr>
+            <td>Precise control</td>
+            <td>Badges, dropdowns, close buttons, overlays ke liye useful</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note"><strong>&#9632; Golden Pattern:</strong> Jis box ke andar absolute child control karna hai, us
+      parent par usually <ic>position: relative</ic> lagao.</div>
+  </div>
+
+  <div class="page new-page">
+    <div class="sec-label">// TOPIC 05 - FIXED POSITION</div>
+    <h2 class="sec-title">position: fixed
+      <span class="desc">Element viewport ke according fixed rehta hai, page scroll se move nahi hota</span>
+    </h2>
+
+    <div class="what-box">
+      <div class="wlabel">Definition</div>
+      <p><ic>fixed</ic> element viewport ke relative position hota hai. User page scroll kare, phir bhi fixed element
+        screen par same jagah dikhta rehta hai.</p>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>fixed button</div>
+      <pre><code><span class="sel">.help-button</span> <span class="pn">{</span>
+  <span class="pr">position</span><span class="pn">:</span> <span class="vl">fixed</span><span class="pn">;</span>
+  <span class="pr">right</span><span class="pn">:</span> <span class="vl">24px</span><span class="pn">;</span>
+  <span class="pr">bottom</span><span class="pn">:</span> <span class="vl">24px</span><span class="pn">;</span>
+  <span class="pr">z-index</span><span class="pn">:</span> <span class="vl">1000</span><span class="pn">;</span>
+<span class="pn">}</span></code></pre>
+    </div>
+
+    <h3 class="sh">Fixed Position Use Cases</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Use Case</th>
+            <th>Why Fixed?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Fixed header</td>
+            <td>Navigation always visible rakhna</td>
+          </tr>
+          <tr>
+            <td>Floating action button</td>
+            <td>Important action accessible rakhna</td>
+          </tr>
+          <tr>
+            <td>Cookie banner</td>
+            <td>Viewport bottom/top par persistent notice</td>
+          </tr>
+          <tr>
+            <td>Modal backdrop</td>
+            <td>Entire viewport cover karna</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="demo-box">
+      <div class="demo-label">fixed concept inside demo area</div>
+      <div class="stage">
+        <div class="pos-card normal-card">scrolling page<br>content</div>
+        <div class="pos-card fixed-card">fixed-like<br>bottom/right</div>
+      </div>
+    </div>
+
+    <div class="warn"><strong>&#9632; Mobile Warning:</strong> Fixed headers/footers mobile par content cover kar sakte
+      hain. Body/content ko required padding dena mat bhoolo.</div>
+  </div>
+
+  <div class="page new-page">
+    <div class="sec-label">// TOPIC 06 - STICKY POSITION</div>
+    <h2 class="sec-title">position: sticky
+      <span class="desc">Normal flow mein rehta hai, scroll threshold ke baad stick ho jata hai</span>
+    </h2>
+
+    <div class="what-box">
+      <div class="wlabel">Definition</div>
+      <p><ic>sticky</ic> relative aur fixed ka combination jaisa behave karta hai. Element pehle normal flow mein hota
+        hai, phir scroll karte waqt specified offset, jaise <ic>top: 0</ic>, par pahunchne ke baad stick ho jata hai.</p>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>sticky header</div>
+      <pre><code><span class="sel">.section-title</span> <span class="pn">{</span>
+  <span class="pr">position</span><span class="pn">:</span> <span class="vl">sticky</span><span class="pn">;</span>
+  <span class="pr">top</span><span class="pn">:</span> <span class="vl">0</span><span class="pn">;</span>
+  <span class="pr">z-index</span><span class="pn">:</span> <span class="vl">10</span><span class="pn">;</span>
+<span class="pn">}</span></code></pre>
+    </div>
+
+    <div class="demo-box">
+      <div class="demo-label">sticky scroll demo</div>
+      <div class="sticky-demo">
+        <div class="sticky-head">STICKY HEADER - top: 0</div>
+        <p>Scroll container ke andar ye header top par stick rahega.</p>
+        <p>Sticky element normal flow se start hota hai.</p>
+        <p>Jab top edge threshold touch karta hai, tab sticky behavior start hota hai.</p>
+        <p>Sticky parent/scroll container ke boundary ke andar hi kaam karta hai.</p>
+        <p>Agar parent ki height enough nahi hai, sticky clearly visible nahi hoga.</p>
+        <p>Section headings, tables ke column headers, app sidebars mein useful hai.</p>
+        <p>Sticky ke liye top/bottom/left/right offset define karna zaruri hota hai.</p>
+      </div>
+    </div>
+
+    <h3 class="sh">Sticky Not Working? Check This</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Problem</th>
+            <th>Fix</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>top set nahi hai</td>
+            <td>top: 0 ya required offset add karo</td>
+          </tr>
+          <tr>
+            <td>Parent height enough nahi</td>
+            <td>Scrollable space ensure karo</td>
+          </tr>
+          <tr>
+            <td>Ancestor overflow hidden/auto</td>
+            <td>Scroll container behavior samjho aur test karo</td>
+          </tr>
+          <tr>
+            <td>z-index low hai</td>
+            <td>Overlapping content ke liye z-index set karo</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="page new-page">
+    <div class="sec-label">// TOPIC 07 - OFFSET PROPERTIES</div>
+    <h2 class="sec-title">top, right, bottom, left and inset
+      <span class="desc">Positioned element ko exact direction mein move/place karna</span>
+    </h2>
+
+    <p class="para"><ic>top</ic>, <ic>right</ic>, <ic>bottom</ic>, <ic>left</ic> offset properties hain. Inka meaning
+      position value par depend karta hai. Relative mein ye original position se shift karte hain; absolute/fixed mein
+      containing block/viewport ke edges se distance define karte hain.</p>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Meaning</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>top</td>
+            <td>Top edge se distance ya original position se downward shift</td>
+          </tr>
+          <tr>
+            <td>right</td>
+            <td>Right edge se distance</td>
+          </tr>
+          <tr>
+            <td>bottom</td>
+            <td>Bottom edge se distance</td>
+          </tr>
+          <tr>
+            <td>left</td>
+            <td>Left edge se distance ya original position se right shift</td>
+          </tr>
+          <tr>
+            <td>inset</td>
+            <td>top/right/bottom/left ka shorthand</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sh">inset Shorthand</h3>
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>inset examples</div>
+      <pre><code><span class="sel">.overlay</span> <span class="pn">{</span>
+  <span class="pr">position</span><span class="pn">:</span> <span class="vl">fixed</span><span class="pn">;</span>
+  <span class="pr">inset</span><span class="pn">:</span> <span class="vl">0</span><span class="pn">;</span> <span class="cm">/* top/right/bottom/left: 0 */</span>
+<span class="pn">}</span>
+
+<span class="sel">.panel</span> <span class="pn">{</span>
+  <span class="pr">position</span><span class="pn">:</span> <span class="vl">absolute</span><span class="pn">;</span>
+  <span class="pr">inset</span><span class="pn">:</span> <span class="vl">20px 30px auto auto</span><span class="pn">;</span>
+<span class="pn">}</span></code></pre>
+    </div>
+
+    <div class="tip"><strong>&#9632; Clean Code Tip:</strong> Full-screen overlay ke liye <ic>inset: 0</ic> very clean
+      shorthand hai. Ye <ic>top: 0; right: 0; bottom: 0; left: 0;</ic> ke equal hai.</div>
+  </div>
+
+  <div class="page new-page">
+    <div class="sec-label">// TOPIC 08 - Z-INDEX</div>
+    <h2 class="sec-title">z-index and Layering
+      <span class="desc">Kaunsa element upar dikhega aur kaunsa neeche</span>
+    </h2>
+
+    <div class="what-box">
+      <div class="wlabel">Definition</div>
+      <p><ic>z-index</ic> positioned elements ki stacking order control karta hai. Higher z-index wala element same
+        stacking context mein lower z-index wale element ke upar dikhta hai.</p>
+    </div>
+
+    <div class="demo-box">
+      <div class="demo-label">z-index layering demo</div>
+      <div class="layer-demo">
+        <div class="layer layer-a">z-index: 1</div>
+        <div class="layer layer-b">z-index: 3</div>
+        <div class="layer layer-c">z-index: 2</div>
+      </div>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>z-index example</div>
+      <pre><code><span class="sel">.modal</span> <span class="pn">{</span>
+  <span class="pr">position</span><span class="pn">:</span> <span class="vl">fixed</span><span class="pn">;</span>
+  <span class="pr">z-index</span><span class="pn">:</span> <span class="vl">1000</span><span class="pn">;</span>
+<span class="pn">}</span>
+
+<span class="sel">.tooltip</span> <span class="pn">{</span>
+  <span class="pr">position</span><span class="pn">:</span> <span class="vl">absolute</span><span class="pn">;</span>
+  <span class="pr">z-index</span><span class="pn">:</span> <span class="vl">20</span><span class="pn">;</span>
+<span class="pn">}</span></code></pre>
+    </div>
+
+    <h3 class="sh">Stacking Context Simple Samajh</h3>
+    <p class="para">Kabhi-kabhi high z-index dene ke baad bhi element upar nahi aata. Reason hota hai stacking context.
+      Parent elements apna separate layer group bana sakte hain. Child ka z-index us parent context ke bahar compete
+      nahi kar pata.</p>
+
+    <div class="note"><strong>&#9632; Practical Habit:</strong> Random huge values like <ic>999999</ic> use karne ke
+      bajay app ke layers plan karo: dropdown 100, header 500, modal 1000, toast 1100.</div>
+  </div>
+
+  <div class="page new-page">
+    <div class="sec-label">// TOPIC 09 - REAL PROJECT PATTERNS</div>
+    <h2 class="sec-title">Practical Position Patterns
+      <span class="desc">Badges, close buttons, overlays, center modals aur sticky nav</span>
+    </h2>
+
+    <h3 class="sh">Card Badge</h3>
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>card badge</div>
+      <pre><code><span class="sel">.product-card</span> <span class="pn">{</span>
+  <span class="pr">position</span><span class="pn">:</span> <span class="vl">relative</span><span class="pn">;</span>
+<span class="pn">}</span>
+
+<span class="sel">.sale-badge</span> <span class="pn">{</span>
+  <span class="pr">position</span><span class="pn">:</span> <span class="vl">absolute</span><span class="pn">;</span>
+  <span class="pr">top</span><span class="pn">:</span> <span class="vl">12px</span><span class="pn">;</span>
+  <span class="pr">right</span><span class="pn">:</span> <span class="vl">12px</span><span class="pn">;</span>
+<span class="pn">}</span></code></pre>
+    </div>
+
+    <h3 class="sh">Full Screen Modal Overlay</h3>
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>modal overlay</div>
+      <pre><code><span class="sel">.overlay</span> <span class="pn">{</span>
+  <span class="pr">position</span><span class="pn">:</span> <span class="vl">fixed</span><span class="pn">;</span>
+  <span class="pr">inset</span><span class="pn">:</span> <span class="vl">0</span><span class="pn">;</span>
+  <span class="pr">display</span><span class="pn">:</span> <span class="vl">grid</span><span class="pn">;</span>
+  <span class="pr">place-items</span><span class="pn">:</span> <span class="vl">center</span><span class="pn">;</span>
+  <span class="pr">background</span><span class="pn">:</span> <span class="vl">rgba(0, 0, 0, 0.6)</span><span class="pn">;</span>
+  <span class="pr">z-index</span><span class="pn">:</span> <span class="vl">1000</span><span class="pn">;</span>
+<span class="pn">}</span></code></pre>
+    </div>
+
+    <h3 class="sh">Centered Absolute Element</h3>
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>absolute center</div>
+      <pre><code><span class="sel">.centered</span> <span class="pn">{</span>
+  <span class="pr">position</span><span class="pn">:</span> <span class="vl">absolute</span><span class="pn">;</span>
+  <span class="pr">top</span><span class="pn">:</span> <span class="vl">50%</span><span class="pn">;</span>
+  <span class="pr">left</span><span class="pn">:</span> <span class="vl">50%</span><span class="pn">;</span>
+  <span class="pr">transform</span><span class="pn">:</span> <span class="vl">translate(-50%, -50%)</span><span class="pn">;</span>
+<span class="pn">}</span></code></pre>
+    </div>
+
+    <div class="tip"><strong>&#9632; Modern Tip:</strong> Centering ke liye fixed/absolute + transform common hai, but
+      many cases mein <ic>display: grid; place-items: center;</ic> simpler hota hai.</div>
+  </div>
+
+  <div class="page new-page">
+    <div class="sec-label">// TOPIC 10 - COMMON MISTAKES</div>
+    <h2 class="sec-title">Common Mistakes and Fixes
+      <span class="desc">Position bugs ko quickly identify karna</span>
+    </h2>
+
+    <div class="two-col">
+      <div class="info-card">
+        <div class="ic-head" style="color:var(--accent);">MISTAKE</div>
+        <div class="ic-body">
+          Absolute child ka parent relative set na karna.<br>
+          Normal layout ke liye position use karna.<br>
+          Fixed header content ko cover kar raha hai.<br>
+          Sticky element par top offset na dena.<br>
+          z-index huge values randomly use karna.<br>
+          Relative element ki reserved space bhool jana.
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="ic-head" style="color:var(--green);">FIX</div>
+        <div class="ic-body">
+          Parent par position: relative lagao.<br>
+          Normal layout ke liye flex/grid use karo.<br>
+          Content padding/margin top adjust karo.<br>
+          sticky ke saath top/right/bottom/left set karo.<br>
+          Layer scale plan karo: 10, 100, 1000.<br>
+          Relative ko visual offset only samjho.
+        </div>
+      </div>
+    </div>
+
+    <h3 class="sh">Debugging Checklist</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Check</th>
+            <th>Question</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Position value</td>
+            <td>Kya element static hai? Offsets kaam karenge?</td>
+          </tr>
+          <tr>
+            <td>Containing block</td>
+            <td>Absolute element kis parent ke according position ho raha hai?</td>
+          </tr>
+          <tr>
+            <td>Document flow</td>
+            <td>Kya element flow se remove ho gaya hai?</td>
+          </tr>
+          <tr>
+            <td>Sticky condition</td>
+            <td>top offset, scroll space aur parent overflow correct hai?</td>
+          </tr>
+          <tr>
+            <td>Layering</td>
+            <td>z-index same stacking context mein compare ho raha hai?</td>
+          </tr>
+          <tr>
+            <td>Mobile view</td>
+            <td>Fixed/absolute element small screen par content cover kar raha hai?</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn"><strong>&#9632; Big Rule:</strong> Position layout system ka replacement nahi hai. Page structure
+      ke liye Flexbox/Grid use karo; precise overlay/edge placement ke liye position use karo.</div>
+  </div>
+
+  <div class="page new-page">
+    <div class="sec-label">// QUICK REFERENCE</div>
+    <h2 class="sec-title">CSS Position - Complete Summary
+      <span class="desc">Revision ke liye all important position concepts ek jagah</span>
+    </h2>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Property / Value</th>
+            <th>Meaning</th>
+            <th>Best Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>position: static</td>
+            <td>Default normal flow</td>
+            <td>Normal content</td>
+          </tr>
+          <tr>
+            <td>position: relative</td>
+            <td>Original place se visual offset</td>
+            <td>Absolute child parent, small shifts</td>
+          </tr>
+          <tr>
+            <td>position: absolute</td>
+            <td>Flow se removed, positioned ancestor relative</td>
+            <td>Badges, close buttons, dropdowns</td>
+          </tr>
+          <tr>
+            <td>position: fixed</td>
+            <td>Viewport ke relative fixed</td>
+            <td>Floating buttons, modals, fixed nav</td>
+          </tr>
+          <tr>
+            <td>position: sticky</td>
+            <td>Scroll threshold ke baad stick</td>
+            <td>Sticky headers, section labels</td>
+          </tr>
+          <tr>
+            <td>top/right/bottom/left</td>
+            <td>Offsets define karte hain</td>
+            <td>Positioned elements ko place karna</td>
+          </tr>
+          <tr>
+            <td>inset</td>
+            <td>Offset shorthand</td>
+            <td>Full overlays, clean positioning</td>
+          </tr>
+          <tr>
+            <td>z-index</td>
+            <td>Layer order control</td>
+            <td>Modal, tooltip, dropdown layers</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sh">Fast Decision Guide</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Need</th>
+            <th>Choose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Normal layout banana hai</td>
+            <td>Flexbox/Grid, position nahi</td>
+          </tr>
+          <tr>
+            <td>Child ko card ke corner mein place karna hai</td>
+            <td>Parent relative + child absolute</td>
+          </tr>
+          <tr>
+            <td>Element screen par fixed chahiye</td>
+            <td>position: fixed</td>
+          </tr>
+          <tr>
+            <td>Header scroll ke baad stick chahiye</td>
+            <td>position: sticky + top</td>
+          </tr>
+          <tr>
+            <td>Full screen overlay banana hai</td>
+            <td>position: fixed + inset: 0</td>
+          </tr>
+          <tr>
+            <td>Element ko dusre ke upar dikhana hai</td>
+            <td>z-index + stacking context check</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sh">Best Practices - Yaad Rakhna</h3>
+    <div class="two-col">
+      <div class="info-card">
+        <div class="ic-head" style="color:var(--green);">DO</div>
+        <div class="ic-body">
+          Parent-child positioning relation clear rakho.<br>
+          Absolute child ke parent par relative lagao.<br>
+          Sticky ke saath top offset define karo.<br>
+          Fixed elements ke liye content spacing plan karo.<br>
+          z-index scale maintain karo.<br>
+          Mobile screen par positioned UI test karo.
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="ic-head" style="color:var(--accent);">AVOID</div>
+        <div class="ic-body">
+          Whole page layout absolute se banana.<br>
+          Random z-index 999999 use karna.<br>
+          Parent relative bhool jana.<br>
+          Fixed elements se content cover karna.<br>
+          Sticky without top offset.<br>
+          Relative offset ko real layout shift samajhna.
+        </div>
+      </div>
+    </div>
+
+    <div
+      style="margin-top:40px; padding:24px; background:var(--bg2); border:1px solid var(--border); border-radius:4px;">
+      <p
+        style="font-size:13px; color:var(--text2); margin-bottom:14px; font-family:'JetBrains Mono',monospace; letter-spacing:1px;">
+        &gt; NEXT TOPICS TO COVER</p>
+      <div style="display:flex; flex-wrap:wrap; gap:8px;">
+        <span class="t-pill">Z-index Deep Dive</span>
+        <span class="t-pill">Flexbox</span>
+        <span class="t-pill">CSS Grid</span>
+        <span class="t-pill">Forms Styling</span>
+        <span class="t-pill">Transitions</span>
+        <span class="t-pill">Animations</span>
+        <span class="t-pill">Responsive Design</span>
+        <span class="t-pill">Media Queries</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Made with <span>&#9829;</span> for Web Development Course learners<br>
+    Shauray ke saath CSS seekhte raho &#128640; &nbsp;|&nbsp; Topic 11 - CSS Position Property
+  </div>
+</body>
+
+</html>

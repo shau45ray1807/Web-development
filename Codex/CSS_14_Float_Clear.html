@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Notes - Float and Clear</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,600;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap');
+
+    :root {
+      --bg: #0a0f1e;
+      --bg2: #0d1b2a;
+      --bg3: #0f2340;
+      --bg4: #071120;
+      --accent: #e94560;
+      --green: #06d6a0;
+      --yellow: #ffd166;
+      --blue: #00b4d8;
+      --purple: #9d4edd;
+      --orange: #f77f00;
+      --text: #e8eaf6;
+      --text2: #a8b2d8;
+      --border: #1e3a5f;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Syne', sans-serif;
+      font-size: 15px;
+      line-height: 1.75;
+    }
+
+    .new-page {
+      page-break-before: always;
+      break-before: page;
+    }
+
+    .cover {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: linear-gradient(160deg, #0a0f1e 0%, #0d1b2a 60%, #0f2340 100%);
+      border-bottom: 3px solid var(--accent);
+      padding: 60px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cover::before {
+      content: '';
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0, 180, 216, 0.08) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .cover-badge {
+      background: var(--accent);
+      color: #fff;
+      padding: 5px 18px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+      display: inline-block;
+    }
+
+    .cover h1 {
+      font-size: 68px;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1;
+      letter-spacing: -3px;
+      margin-bottom: 12px;
+    }
+
+    .cover h1 span {
+      color: var(--blue);
+    }
+
+    .cover-subtitle {
+      font-size: 18px;
+      color: var(--text2);
+      margin-bottom: 6px;
+    }
+
+    .cover-course {
+      font-size: 13px;
+      color: var(--yellow);
+      letter-spacing: 1.5px;
+      margin-bottom: 50px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .topics-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      max-width: 780px;
+    }
+
+    .t-pill {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--text2);
+      padding: 5px 14px;
+      font-size: 12px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .page {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 60px 40px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sec-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    h2.sec-title {
+      font-size: 32px;
+      font-weight: 800;
+      color: #fff;
+      border-left: 4px solid var(--blue);
+      padding-left: 16px;
+      margin-bottom: 6px;
+      line-height: 1.2;
+    }
+
+    h2.sec-title .desc {
+      display: block;
+      font-size: 13px;
+      color: var(--text2);
+      font-weight: 400;
+      letter-spacing: 0.5px;
+      margin-top: 5px;
+    }
+
+    .what-box {
+      background: var(--bg2);
+      border-left: 3px solid var(--blue);
+      padding: 16px 20px;
+      margin: 24px 0;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .what-box .wlabel {
+      font-size: 10px;
+      color: var(--blue);
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .what-box p {
+      color: var(--text2);
+      font-size: 14px;
+    }
+
+    .tip,
+    .note,
+    .warn {
+      padding: 12px 18px;
+      margin: 18px 0;
+      border-radius: 0 4px 4px 0;
+      font-size: 13.5px;
+    }
+
+    .tip {
+      background: rgba(6, 214, 160, 0.08);
+      border-left: 3px solid var(--green);
+      color: var(--green);
+    }
+
+    .note {
+      background: rgba(255, 209, 102, 0.08);
+      border-left: 3px solid var(--yellow);
+      color: var(--yellow);
+    }
+
+    .warn {
+      background: rgba(233, 69, 96, 0.08);
+      border-left: 3px solid var(--accent);
+      color: var(--accent);
+    }
+
+    .tip strong,
+    .note strong,
+    .warn strong {
+      font-weight: 700;
+      margin-right: 6px;
+    }
+
+    .code-wrap {
+      margin: 20px 0;
+    }
+
+    .code-label {
+      background: var(--bg3);
+      padding: 6px 14px;
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text2);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+    }
+
+    .dot-r {
+      background: #e94560;
+    }
+
+    .dot-y {
+      background: #ffd166;
+    }
+
+    .dot-g {
+      background: #06d6a0;
+    }
+
+    pre {
+      background: var(--bg4);
+      border: 1px solid var(--border);
+      padding: 20px 22px;
+      overflow-x: auto;
+      border-top: none;
+    }
+
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      line-height: 1.9;
+    }
+
+    .pr {
+      color: #00b4d8;
+    }
+
+    .vl {
+      color: #06d6a0;
+    }
+
+    .cm {
+      color: #4a6080;
+      font-style: italic;
+    }
+
+    .tg {
+      color: #ffd166;
+    }
+
+    .at {
+      color: #9d4edd;
+    }
+
+    .pn {
+      color: #a8b2d8;
+    }
+
+    .sel {
+      color: #f77f00;
+    }
+
+    .tbl-wrap {
+      margin: 20px 0;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+    }
+
+    thead tr {
+      background: var(--bg3);
+    }
+
+    th {
+      padding: 10px 16px;
+      text-align: left;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--blue);
+      letter-spacing: 1px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    td {
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text2);
+      vertical-align: top;
+    }
+
+    td:first-child {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--yellow);
+      font-size: 13px;
+    }
+
+    tbody tr:hover {
+      background: var(--bg2);
+    }
+
+    ic {
+      background: var(--bg3);
+      color: var(--yellow);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12.5px;
+      padding: 1px 7px;
+      border-radius: 3px;
+      border: 1px solid var(--border);
+    }
+
+    h3.sh {
+      font-size: 17px;
+      font-weight: 700;
+      color: #fff;
+      margin: 30px 0 12px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    h3.sh::before {
+      content: '\25A0';
+      color: var(--accent);
+      font-size: 10px;
+    }
+
+    p.para {
+      color: var(--text2);
+      margin: 10px 0;
+      font-size: 14.5px;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 20px 0;
+    }
+
+    .info-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .info-card .ic-head {
+      padding: 8px 14px;
+      font-size: 11px;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 1px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg3);
+    }
+
+    .info-card .ic-body {
+      padding: 14px 16px;
+      font-size: 13px;
+      color: var(--text2);
+      line-height: 1.8;
+    }
+
+    .demo-box {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 20px 24px;
+      margin: 16px 0;
+    }
+
+    .demo-label {
+      font-size: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text2);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .float-demo {
+      background: var(--bg4);
+      border: 1px dashed var(--border);
+      padding: 16px;
+      color: var(--text2);
+      font-size: 13.5px;
+      min-height: 150px;
+    }
+
+    .float-box {
+      width: 120px;
+      height: 90px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      background: rgba(0, 180, 216, 0.18);
+      border: 1px solid var(--blue);
+      color: var(--text);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      margin: 0 16px 10px 0;
+    }
+
+    .float-left {
+      float: left;
+    }
+
+    .float-right {
+      float: right;
+      margin: 0 0 10px 16px;
+      background: rgba(6, 214, 160, 0.14);
+      border-color: var(--green);
+    }
+
+    .clear-line {
+      clear: both;
+      padding: 10px 12px;
+      background: rgba(233, 69, 96, 0.12);
+      border-left: 3px solid var(--accent);
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+    }
+
+    .collapse-demo {
+      border: 1px dashed var(--accent);
+      background: rgba(233, 69, 96, 0.06);
+      padding: 12px;
+      color: var(--text2);
+    }
+
+    .clearfix::after {
+      content: "";
+      display: block;
+      clear: both;
+    }
+
+    .mini-img {
+      width: 112px;
+      height: 88px;
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      border: 1px solid var(--border);
+      float: left;
+      margin: 4px 16px 8px 0;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 40px;
+      color: var(--text2);
+      font-size: 13px;
+      font-family: 'JetBrains Mono', monospace;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer span {
+      color: var(--accent);
+    }
+
+    @media (max-width: 720px) {
+      .cover h1 {
+        font-size: 44px;
+        letter-spacing: -1px;
+      }
+
+      .page {
+        padding: 44px 22px;
+      }
+
+      h2.sec-title {
+        font-size: 26px;
+      }
+
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media print {
+      @page {
+        size: A4;
+        margin: 12mm;
+      }
+
+      body {
+        background: var(--bg);
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .cover {
+        min-height: 100vh;
+        page-break-after: always;
+        break-after: page;
+      }
+
+      .page {
+        max-width: none;
+        padding: 26px 18px;
+        border-bottom: none;
+        page-break-before: always;
+        break-before: page;
+      }
+
+      .what-box,
+      .tip,
+      .note,
+      .warn,
+      .code-wrap,
+      .tbl-wrap,
+      .info-card,
+      .demo-box {
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+
+      pre {
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="cover">
+    <div class="cover-badge">&#9632; Complete Notes - Topic 14</div>
+    <h1>CSS <span>Float</span><br>and Clear</h1>
+    <p class="cover-subtitle">Text wrapping, image alignment aur old layout technique ko properly samajhna</p>
+    <p class="cover-course">Web Development Course - Shauray</p>
+    <div class="topics-list">
+      <span class="t-pill">float</span>
+      <span class="t-pill">left</span>
+      <span class="t-pill">right</span>
+      <span class="t-pill">none</span>
+      <span class="t-pill">clear</span>
+      <span class="t-pill">both</span>
+      <span class="t-pill">clearfix</span>
+      <span class="t-pill">text wrap</span>
+      <span class="t-pill">parent collapse</span>
+      <span class="t-pill">modern layout</span>
+    </div>
+  </div>
+
+  <div class="page new-page">
+    <div class="sec-label">// TOPIC 01 - FLOAT BASICS</div>
+    <h2 class="sec-title">float Property Kya Hai?
+      <span class="desc">Element ko left/right side par push karke text ko uske around flow karwana</span>
+    </h2>
+
+    <div class="what-box">
+      <div class="wlabel">Simple Definition</div>
+      <p><ic>float</ic> CSS property element ko normal flow se partially remove karke left ya right side par place karti
+        hai, aur nearby inline/text content uske around wrap kar sakta hai. Iska original use images ke around text flow
+        karwana tha.</p>
+    </div>
+
+    <p class="para">Old CSS days mein float ko page layout banane ke liye bhi use kiya jaata tha, jaise two-column
+      layouts. Lekin modern CSS mein layout ke liye Flexbox aur Grid better hain. Float aaj bhi useful hai jab image,
+      quote, icon ya small box ke around paragraph text wrap karwana ho.</p>
+
+    <h3 class="sh">float Values</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Value</th>
+            <th>Meaning</th>
+            <th>Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>none</td>
+            <td>Default, element float nahi karega</td>
+            <td>Normal document flow</td>
+          </tr>
+          <tr>
+            <td>left</td>
+            <td>Element container ke left side float karega</td>
+            <td>Image left, text right side wrap</td>
+          </tr>
+          <tr>
+            <td>right</td>
+            <td>Element container ke right side float karega</td>
+            <td>Image right, text left side wrap</td>
+          </tr>
+          <tr>
+            <td>inline-start</td>
+            <td>Writing direction ke start side par float</td>
+            <td>Logical direction layouts</td>
+          </tr>
+          <tr>
+            <td>inline-end</td>
+            <td>Writing direction ke end side par float</td>
+            <td>Internationalized layouts</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>basic float syntax</div>
+      <pre><code><span class="sel">.image</span> <span class="pn">{</span>
+  <span class="pr">float</span><span class="pn">:</span> <span class="vl">left</span><span class="pn">;</span>
+  <span class="pr">width</span><span class="pn">:</span> <span class="vl">160px</span><span class="pn">;</span>
+  <span class="pr">margin-right</span><span class="pn">:</span> <span class="vl">16px</span><span class="pn">;</span>
+<span class="pn">}</span></code></pre>
+    </div>
+
+    <div class="note"><strong>&#9632; Core Idea:</strong> Float ka main purpose text wrapping hai. Full page layout ke
+      liye float old technique hai; modern layout ke liye Flexbox/Grid use karo.</div>
+  </div>
+
+  <div class="page new-page">
+    <div class="sec-label">// TOPIC 02 - FLOAT LEFT</div>
+    <h2 class="sec-title">float: left
+      <span class="desc">Element left side par chala jaata hai aur text right side wrap karta hai</span>
+    </h2>
+
+    <div class="what-box">
+      <div class="wlabel">Definition</div>
+      <p><ic>float: left</ic> element ko parent container ke left edge ki taraf float karta hai. Uske baad jo text ya
+        inline content aata hai, woh element ke right side se flow kar sakta hai.</p>
+    </div>
+
+    <div class="demo-box">
+      <div class="demo-label">float left demo</div>
+      <div class="float-demo">
+        <div class="float-box float-left">float: left</div>
+        Float left use karne par ye box left side par placed hai. Paragraph ka text box ke right side mein wrap ho raha
+        hai. Ye pattern article image, author avatar, drop cap style blocks aur small illustrations ke liye useful ho
+        sakta hai. Margin dena important hai, warna text floated element se chipak jaata hai.
+      </div>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>float left image</div>
+      <pre><code><span class="sel">.article-img</span> <span class="pn">{</span>
+  <span class="pr">float</span><span class="pn">:</span> <span class="vl">left</span><span class="pn">;</span>
+  <span class="pr">width</span><span class="pn">:</span> <span class="vl">180px</span><span class="pn">;</span>
+  <span class="pr">margin</span><span class="pn">:</span> <span class="vl">0 18px 12px 0</span><span class="pn">;</span>
+<span class="pn">}</span></code></pre>
+    </div>
+
+    <div class="tip"><strong>&#9632; Spacing Tip:</strong> Left floated element ke liye usually right aur bottom margin
+      dete hain, taaki text element se touch na kare.</div>
+  </div>
+
+  <div class="page new-page">
+    <div class="sec-label">// TOPIC 03 - FLOAT RIGHT</div>
+    <h2 class="sec-title">float: right
+      <span class="desc">Element right side par chala jaata hai aur text left side wrap karta hai</span>
+    </h2>
+
+    <div class="what-box">
+      <div class="wlabel">Definition</div>
+      <p><ic>float: right</ic> element ko parent container ke right edge ki taraf float karta hai. Nearby text uske left
+        side se flow karta hai.</p>
+    </div>
+
+    <div class="demo-box">
+      <div class="demo-label">float right demo</div>
+      <div class="float-demo">
+        <div class="float-box float-right">float: right</div>
+        Float right use karne par box right side par placed hai. Text left side se flow hota hai aur available space ke
+        according wrap karta hai. Ye pattern pull quote, article thumbnail, small badge ya side image ke liye kaam aa
+        sakta hai. Responsive screen par float behavior carefully test karna chahiye.
+      </div>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>float right box</div>
+      <pre><code><span class="sel">.quote-box</span> <span class="pn">{</span>
+  <span class="pr">float</span><span class="pn">:</span> <span class="vl">right</span><span class="pn">;</span>
+  <span class="pr">width</span><span class="pn">:</span> <span class="vl">220px</span><span class="pn">;</span>
+  <span class="pr">margin</span><span class="pn">:</span> <span class="vl">0 0 14px 18px</span><span class="pn">;</span>
+<span class="pn">}</span></code></pre>
+    </div>
+
+    <div class="warn"><strong>&#9632; Mobile Warning:</strong> Small screens par floated boxes text ko very narrow bana
+      sakte hain. Media query mein float remove karna common solution hai.</div>
+  </div>
+
+  <div class="page new-page">
+    <div class="sec-label">// TOPIC 04 - CLEAR PROPERTY</div>
+    <h2 class="sec-title">clear Property
+      <span class="desc">Element ko floated elements ke neeche force karna</span>
+    </h2>
+
+    <div class="what-box">
+      <div class="wlabel">Simple Definition</div>
+      <p><ic>clear</ic> property batati hai ki element ke left/right side par floated elements allowed hain ya nahi.
+        Agar <ic>clear: both</ic> diya, to element previous left/right floats ke neeche start hoga.</p>
+    </div>
+
+    <h3 class="sh">clear Values</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Value</th>
+            <th>Meaning</th>
+            <th>Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>none</td>
+            <td>Default, floats ke side mein aa sakta hai</td>
+            <td>Normal behavior</td>
+          </tr>
+          <tr>
+            <td>left</td>
+            <td>Left floated elements ke neeche start</td>
+            <td>Left float stop karna</td>
+          </tr>
+          <tr>
+            <td>right</td>
+            <td>Right floated elements ke neeche start</td>
+            <td>Right float stop karna</td>
+          </tr>
+          <tr>
+            <td>both</td>
+            <td>Left and right floats dono ke neeche start</td>
+            <td>Most common clear value</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="demo-box">
+      <div class="demo-label">clear both demo</div>
+      <div class="float-demo">
+        <div class="float-box float-left">float left</div>
+        <div class="float-box float-right">float right</div>
+        Yeh text floats ke beech available space mein flow kar raha hai. Lekin next block agar normal flow mein aaye to
+        woh floats ke side mein aa sakta hai.
+        <div class="clear-line">clear: both; this line starts below floated boxes</div>
+      </div>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>clear both</div>
+      <pre><code><span class="sel">.next-section</span> <span class="pn">{</span>
+  <span class="pr">clear</span><span class="pn">:</span> <span class="vl">both</span><span class="pn">;</span>
+<span class="pn">}</span></code></pre>
+    </div>
+  </div>
+
+  <div class="page new-page">
+    <div class="sec-label">// TOPIC 05 - PARENT COLLAPSE</div>
+    <h2 class="sec-title">Parent Collapse Problem
+      <span class="desc">Floated children parent ki height mein count nahi hote</span>
+    </h2>
+
+    <div class="what-box">
+      <div class="wlabel">Important Problem</div>
+      <p>Jab parent ke andar sirf floated children hote hain, parent ki height collapse ho sakti hai. Reason: floated
+        elements normal flow se remove jaise behave karte hain, isliye parent unki height automatically include nahi karta.</p>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>collapse example</div>
+      <pre><code><span class="sel">.parent</span> <span class="pn">{</span>
+  <span class="pr">border</span><span class="pn">:</span> <span class="vl">2px solid red</span><span class="pn">;</span>
+<span class="pn">}</span>
+
+<span class="sel">.child</span> <span class="pn">{</span>
+  <span class="pr">float</span><span class="pn">:</span> <span class="vl">left</span><span class="pn">;</span>
+  <span class="pr">width</span><span class="pn">:</span> <span class="vl">100px</span><span class="pn">;</span>
+  <span class="pr">height</span><span class="pn">:</span> <span class="vl">100px</span><span class="pn">;</span>
+<span class="pn">}</span></code></pre>
+    </div>
+
+    <div class="demo-box">
+      <div class="demo-label">collapsed parent concept</div>
+      <div class="collapse-demo">
+        Parent border collapse/short dikh sakta hai jab andar ke elements float ho aur normal content na ho. Is problem
+        ko solve karne ke liye clearfix, overflow auto, display flow-root, ya modern layout use kiya ja sakta hai.
+      </div>
+    </div>
+
+    <div class="warn"><strong>&#9632; Common Bug:</strong> Parent background/border missing lag raha hai? Check karo
+      andar ke children float hain kya. Agar haan, parent collapse likely issue hai.</div>
+  </div>
+
+  <div class="page new-page">
+    <div class="sec-label">// TOPIC 06 - CLEARFIX</div>
+    <h2 class="sec-title">Clearfix Technique
+      <span class="desc">Parent ko floated children ki height include karwana</span>
+    </h2>
+
+    <div class="what-box">
+      <div class="wlabel">Definition</div>
+      <p>Clearfix ek CSS technique hai jisme parent ke after pseudo-element ko clear kiya jaata hai. Isse parent floated
+        children ki height contain kar leta hai.</p>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>classic clearfix</div>
+      <pre><code><span class="sel">.clearfix</span><span class="pn">::</span><span class="at">after</span> <span class="pn">{</span>
+  <span class="pr">content</span><span class="pn">:</span> <span class="vl">""</span><span class="pn">;</span>
+  <span class="pr">display</span><span class="pn">:</span> <span class="vl">block</span><span class="pn">;</span>
+  <span class="pr">clear</span><span class="pn">:</span> <span class="vl">both</span><span class="pn">;</span>
+<span class="pn">}</span></code></pre>
+    </div>
+
+    <div class="demo-box">
+      <div class="demo-label">clearfix demo</div>
+      <div class="float-demo clearfix">
+        <div class="float-box float-left">float child</div>
+        Parent par clearfix applied hai. Isliye floated child ke baad parent ka height properly contain hota hai. Yeh
+        old float-based layouts mein bahut common solution tha.
+      </div>
+    </div>
+
+    <h3 class="sh">Modern Alternative: flow-root</h3>
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>flow-root contain floats</div>
+      <pre><code><span class="sel">.parent</span> <span class="pn">{</span>
+  <span class="pr">display</span><span class="pn">:</span> <span class="vl">flow-root</span><span class="pn">;</span>
+<span class="pn">}</span></code></pre>
+    </div>
+
+    <div class="tip"><strong>&#9632; Modern Tip:</strong> New code mein parent float containment ke liye
+      <ic>display: flow-root</ic> clearfix se cleaner ho sakta hai.</div>
+  </div>
+
+  <div class="page new-page">
+    <div class="sec-label">// TOPIC 07 - FLOAT WITH IMAGES</div>
+    <h2 class="sec-title">Image Text Wrap Pattern
+      <span class="desc">Float ka real useful modern use case</span>
+    </h2>
+
+    <p class="para">Float ka sabse natural use article image ko left/right side par rakhkar text ko uske around wrap
+      karwana hai. Ye magazine/newspaper style layout ke liye useful hota hai.</p>
+
+    <div class="demo-box">
+      <div class="demo-label">article image wrap demo</div>
+      <div class="float-demo clearfix">
+        <div class="mini-img"></div>
+        CSS float image ko paragraph ke side mein place karta hai. Text image ke around wrap hota hai, isliye content
+        natural article flow jaisa lagta hai. Agar image important hai, alt text HTML mein dena zaruri hai. Agar image
+        decorative hai, accessible handling different ho sakti hai.
+      </div>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>article image wrap</div>
+      <pre><code><span class="tg">&lt;img</span> <span class="at">class</span><span class="pn">=</span><span class="vl">"article-img"</span> <span class="at">src</span><span class="pn">=</span><span class="vl">"photo.jpg"</span> <span class="at">alt</span><span class="pn">=</span><span class="vl">"..."</span><span class="tg">&gt;</span>
+<span class="tg">&lt;p&gt;</span>Article text image ke around wrap hoga...<span class="tg">&lt;/p&gt;</span></code></pre>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>image css</div>
+      <pre><code><span class="sel">.article-img</span> <span class="pn">{</span>
+  <span class="pr">float</span><span class="pn">:</span> <span class="vl">left</span><span class="pn">;</span>
+  <span class="pr">max-width</span><span class="pn">:</span> <span class="vl">40%</span><span class="pn">;</span>
+  <span class="pr">margin</span><span class="pn">:</span> <span class="vl">0 1rem 0.75rem 0</span><span class="pn">;</span>
+<span class="pn">}</span>
+
+<span class="at">@media</span> <span class="pn">(</span><span class="pr">max-width</span><span class="pn">:</span> <span class="vl">600px</span><span class="pn">)</span> <span class="pn">{</span>
+  <span class="sel">.article-img</span> <span class="pn">{</span>
+    <span class="pr">float</span><span class="pn">:</span> <span class="vl">none</span><span class="pn">;</span>
+    <span class="pr">max-width</span><span class="pn">:</span> <span class="vl">100%</span><span class="pn">;</span>
+    <span class="pr">margin</span><span class="pn">:</span> <span class="vl">0 0 1rem</span><span class="pn">;</span>
+  <span class="pn">}</span>
+<span class="pn">}</span></code></pre>
+    </div>
+  </div>
+
+  <div class="page new-page">
+    <div class="sec-label">// TOPIC 08 - FLOAT VS MODERN LAYOUT</div>
+    <h2 class="sec-title">Float vs Flexbox/Grid
+      <span class="desc">Kab float use karein aur kab modern layout use karein</span>
+    </h2>
+
+    <div class="what-box">
+      <div class="wlabel">Modern Rule</div>
+      <p>Float ko layout system ke replacement ke roop mein use nahi karna chahiye. Columns, navbars, cards, dashboards
+        aur page layouts ke liye Flexbox aur CSS Grid zyada predictable, responsive aur maintainable hain.</p>
+    </div>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Need</th>
+            <th>Use Float?</th>
+            <th>Better Choice</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Text image ke around wrap karna</td>
+            <td>Yes</td>
+            <td>float</td>
+          </tr>
+          <tr>
+            <td>Navbar links align karna</td>
+            <td>No</td>
+            <td>Flexbox</td>
+          </tr>
+          <tr>
+            <td>Two-column page layout</td>
+            <td>No for new code</td>
+            <td>Grid or Flexbox</td>
+          </tr>
+          <tr>
+            <td>Card grid banana</td>
+            <td>No</td>
+            <td>CSS Grid</td>
+          </tr>
+          <tr>
+            <td>Small pull quote side mein rakhna</td>
+            <td>Maybe</td>
+            <td>float or grid depending design</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>modern columns</div>
+      <pre><code><span class="sel">.layout</span> <span class="pn">{</span>
+  <span class="pr">display</span><span class="pn">:</span> <span class="vl">grid</span><span class="pn">;</span>
+  <span class="pr">grid-template-columns</span><span class="pn">:</span> <span class="vl">240px 1fr</span><span class="pn">;</span>
+  <span class="pr">gap</span><span class="pn">:</span> <span class="vl">24px</span><span class="pn">;</span>
+<span class="pn">}</span></code></pre>
+    </div>
+
+    <div class="note"><strong>&#9632; History Note:</strong> Float layouts important historical CSS topic hain. Legacy
+      projects samajhne ke liye float/clear knowledge useful hai.</div>
+  </div>
+
+  <div class="page new-page">
+    <div class="sec-label">// TOPIC 09 - COMMON MISTAKES</div>
+    <h2 class="sec-title">Common Mistakes and Fixes
+      <span class="desc">Float bugs ko quickly identify karna</span>
+    </h2>
+
+    <div class="two-col">
+      <div class="info-card">
+        <div class="ic-head" style="color:var(--accent);">MISTAKE</div>
+        <div class="ic-body">
+          Page layout ke liye float use karna.<br>
+          Float ke baad clear na lagana.<br>
+          Parent collapse problem ignore karna.<br>
+          Floated image ko margin na dena.<br>
+          Mobile screen par float remove na karna.<br>
+          Clearfix ke purpose ko samjhe bina copy karna.
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="ic-head" style="color:var(--green);">FIX</div>
+        <div class="ic-body">
+          Layout ke liye Flexbox/Grid use karo.<br>
+          Next section par clear: both use karo where needed.<br>
+          Parent par clearfix ya flow-root use karo.<br>
+          Float side ke opposite margin add karo.<br>
+          Media query mein float: none karo.<br>
+          Float containment ka concept samjho.
+        </div>
+      </div>
+    </div>
+
+    <h3 class="sh">Debugging Checklist</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Check</th>
+            <th>Question</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Float direction</td>
+            <td>Element left float hai ya right?</td>
+          </tr>
+          <tr>
+            <td>Spacing</td>
+            <td>Text aur floated element ke beech margin hai?</td>
+          </tr>
+          <tr>
+            <td>Clear</td>
+            <td>Next content ko float ke neeche start hona chahiye?</td>
+          </tr>
+          <tr>
+            <td>Parent height</td>
+            <td>Parent collapse ho raha hai?</td>
+          </tr>
+          <tr>
+            <td>Responsive</td>
+            <td>Mobile par float layout readable hai?</td>
+          </tr>
+          <tr>
+            <td>Modern alternative</td>
+            <td>Kya ye layout Flexbox/Grid se better ban sakta hai?</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn"><strong>&#9632; Big Rule:</strong> Float ko layout shortcut mat banao. Float ka use tab karo jab
+      content ko floated element ke around wrap karwana ho.</div>
+  </div>
+
+  <div class="page new-page">
+    <div class="sec-label">// QUICK REFERENCE</div>
+    <h2 class="sec-title">CSS Float and Clear - Complete Summary
+      <span class="desc">Revision ke liye all important float/clear concepts ek jagah</span>
+    </h2>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Property / Concept</th>
+            <th>Meaning</th>
+            <th>Best Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>float: none</td>
+            <td>Default, no float</td>
+            <td>Normal flow</td>
+          </tr>
+          <tr>
+            <td>float: left</td>
+            <td>Element left side float</td>
+            <td>Image left, text wrap</td>
+          </tr>
+          <tr>
+            <td>float: right</td>
+            <td>Element right side float</td>
+            <td>Quote/image right, text wrap</td>
+          </tr>
+          <tr>
+            <td>clear: left</td>
+            <td>Left floats ke neeche start</td>
+            <td>Stop left float influence</td>
+          </tr>
+          <tr>
+            <td>clear: right</td>
+            <td>Right floats ke neeche start</td>
+            <td>Stop right float influence</td>
+          </tr>
+          <tr>
+            <td>clear: both</td>
+            <td>All floats ke neeche start</td>
+            <td>Most common clear</td>
+          </tr>
+          <tr>
+            <td>clearfix</td>
+            <td>Parent floated children contain kare</td>
+            <td>Legacy float layouts</td>
+          </tr>
+          <tr>
+            <td>display: flow-root</td>
+            <td>Modern float containment</td>
+            <td>Cleaner parent containment</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sh">Fast Decision Guide</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Situation</th>
+            <th>Choose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Text ko image ke around wrap karna hai</td>
+            <td>float</td>
+          </tr>
+          <tr>
+            <td>Next section float ke neeche chahiye</td>
+            <td>clear: both</td>
+          </tr>
+          <tr>
+            <td>Parent height collapse ho rahi</td>
+            <td>clearfix or display: flow-root</td>
+          </tr>
+          <tr>
+            <td>Cards/grid layout banana hai</td>
+            <td>CSS Grid</td>
+          </tr>
+          <tr>
+            <td>Navbar/link alignment chahiye</td>
+            <td>Flexbox</td>
+          </tr>
+          <tr>
+            <td>Mobile par text cramped ho raha</td>
+            <td>float: none in media query</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sh">Best Practices - Yaad Rakhna</h3>
+    <div class="two-col">
+      <div class="info-card">
+        <div class="ic-head" style="color:var(--green);">DO</div>
+        <div class="ic-body">
+          Text wrapping ke liye float use karo.<br>
+          Opposite side margin add karo.<br>
+          Needed places par clear use karo.<br>
+          Parent collapse ke liye flow-root/clearfix use karo.<br>
+          Mobile par float behavior test karo.<br>
+          Legacy code samajhne ke liye float practice karo.
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="ic-head" style="color:var(--accent);">AVOID</div>
+        <div class="ic-body">
+          Modern page layout float se banana.<br>
+          Floated elements without spacing.<br>
+          Parent collapse ignore karna.<br>
+          Clear property randomly use karna.<br>
+          Mobile readability ignore karna.<br>
+          Flexbox/Grid ke place par old float hacks.
+        </div>
+      </div>
+    </div>
+
+    <div
+      style="margin-top:40px; padding:24px; background:var(--bg2); border:1px solid var(--border); border-radius:4px;">
+      <p
+        style="font-size:13px; color:var(--text2); margin-bottom:14px; font-family:'JetBrains Mono',monospace; letter-spacing:1px;">
+        &gt; NEXT TOPICS TO COVER</p>
+      <div style="display:flex; flex-wrap:wrap; gap:8px;">
+        <span class="t-pill">Flexbox</span>
+        <span class="t-pill">CSS Grid</span>
+        <span class="t-pill">Responsive Design</span>
+        <span class="t-pill">Pseudo Classes</span>
+        <span class="t-pill">Transitions</span>
+        <span class="t-pill">Animations</span>
+        <span class="t-pill">Forms Styling</span>
+        <span class="t-pill">Object Fit</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Made with <span>&#9829;</span> for Web Development Course learners<br>
+    Shauray ke saath CSS seekhte raho &#128640; &nbsp;|&nbsp; Topic 14 - CSS Float and Clear
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS - Variables</title>
+    <style>
+        /* This is globle variables: It means :root{} you give in this root any element like --color, --defpad, --defmar, --defop wahtever you want, so you all element are globle variable you can use as a globel. Jaha bhi aap is element ko lagaye ge toh ek root ke under change karne par vo jaha jaha laga hoga pura change hojayega. You can use also var(--color). */
+        :root {
+            --color: rgb(150, 249, 234);
+            --seccolor: rgb(183, 183, 247);
+            --defpad: 25px;
+            --defop: 0.2;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul {
+            display: flex;
+        }
+
+        ul li {
+            opacity: var(--defop);
+            list-style: none;
+            padding: var(--defpad);
+            border: 3px solid var(--seccolor);
+        }
+
+        ul li:first-child{
+            --color: rgb(94, 255, 8);
+            background-color: var(--color);
+        }
+
+        .nav {
+            /* this is globle variable use var(--color)  */
+            background-color: var(--color);
+            color: red;
+        }
+
+        .container {
+            /* This is a local variables, because you use this  --color directly in this selector  */
+            /* --color: blue; */
+            /* background-color: var(--color); */
+
+            background-color: var(--seccolor);
+            color: rgb(85, 2, 2);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="nav">
+        <ul>
+            <li>Home</li>
+            <li>About</li>
+            <li>Contact</li>
+        </ul>
+    </div>
+
+    <div class="container">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, alias laborum? Debitis soluta eveniet,
+        laborum officia aut ipsum vero, ducimus quam sequi fugiat animi veniam ullam voluptas aperiam facere corrupti
+        ipsam consequatur quasi quibusdam unde exercitationem iste quod reiciendis. Dicta officiis mollitia quas facilis
+        soluta.
+    </div>
+
+</body>
+
+</html>

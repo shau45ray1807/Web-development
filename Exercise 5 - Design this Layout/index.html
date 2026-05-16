@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS - Exercise 5 - Design this Layout</title>
+    <style>
+        body {
+            background-color: rgba(196, 250, 250, 0.65);
+        }
+
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+        }
+
+        nav ul {
+            border: 2px solid aqua;
+            display: flex;
+            list-style: none;
+            background-color: aqua;
+        }
+
+        ul li {
+            color: rgb(106, 1, 1);
+            margin: 10px;
+        }
+
+        .boxes {
+            margin: 10px 45px;
+            display: flex;
+            border: 2px solid aquamarine;
+            background-color: aquamarine;
+        }
+
+        .box1 {
+            border: 2px solid black;
+            padding: 45px;
+            margin: 50px;
+            height: 450px;
+            width: 550px;
+            background-color: antiquewhite;
+        }
+
+        .box2 {
+            border: 2px solid black;
+            padding: 45px;
+            margin: 50px;
+            height: 450px;
+            width: 550px;
+            background-color: aliceblue;
+        }
+
+        .container {
+            border: 2px solid black;
+            border-radius: 30px;
+            padding: 60px;
+            margin: 20px 100px;
+            text-align: center;
+            align-items: stretch;
+            align-content: start;
+        }
+
+        .logo {
+            position: fixed;
+            bottom: 0px;
+            right: 5px;
+        }
+
+        .footer {
+            background-color: aquamarine;
+            border: 2px solid black;
+            color: rgb(145, 3, 3);
+            padding: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li>Home</li>
+                <li>About</li>
+                <li>Contact</li>
+                <li>Services</li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="boxes">
+            <div class="box1"></div>
+            <div class="box2"></div>
+        </div>
+
+        <div class="logo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/Google_Chrome_icon_%28February_2022%29.svg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original"
+                alt="">
+        </div>
+
+        <div class="container">
+            <h2>Welcome to Sigma Web Development Course!</h2>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <address>
+            Youtube: <a href="https://youtu.be/tVzUXW6siu0?list=PLu0W_9lII9agq5TrH9XLIKQvv0iaF2X3w">Sigma Web
+                Development Course</a>
+        </address>
+    </footer>
+
+</body>
+
+</html>

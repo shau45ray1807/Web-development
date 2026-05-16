@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS - Flexbox - Ultimate MasterClass</title>
+    <style>
+        .container {
+            border: 2px solid red;
+            display: flex;
+            height: 80vh;
+
+            /* left to right */
+            /* justify-content: center; */
+
+            /* top to bottom: only you can aling one row */
+            /* there is no justify-items in flexbox */
+            /* align-items: center; */
+
+            /* More than one row you want to do center  */
+            /* align-content: center; */
+
+            /* column means top to bottom  */
+            /* flex-direction: column; */
+            /* flex-direction: row; */
+
+            /* wrap means jo content hai wo gallarey typr arange ho jayenge  */
+            /* flex-wrap: wrap; */
+            /* flex-flow: row wrap; */
+
+            /* gap between element  */
+            /* gap: 30px; */
+
+            /* gap between rows  */
+            /* row-gap: 45px; */
+
+            /* gap between column  */
+            /* column-gap: 20px; */
+
+            /* gap: <row-gap> <column-gap>; */
+            gap: 45px 10px;
+        }
+
+        .item {
+            /* flex grow means sabhi items ko equal size me arrange karna */
+            /* flex-grow: 1; */
+            height: 84px;
+            width: 84px;
+            background-color: blueviolet;
+            border: 2px solid black;
+            /* margin: 4px; */
+        }
+
+        /* jis item me jitna zayda order utna hi end me aayega */
+        .order-1 {
+            order: 1;
+        }
+
+        .order-2 {
+            order: 2;
+        }
+
+        .order-3 {
+            order: 3;
+        }
+
+        .item1 {
+            /* flex-grow: 2; */
+
+            /* abelity of a flex item to shrink if necarry. Jaruri hai toh shrink hoga natoh nahi */
+            /* shrink means page ke size ke isaab se item ko arrange karna jis item par shrink laga hua hai */
+            /* flex-shrink: 2; */
+
+            /* ek partcular item ka position change karne keliye ki voh apne self ko align kar le  */
+            align-self: flex-end;
+        }
+    </style>
+</head>
+
+<body>
+
+    <main>
+        <div class="container">
+            <div class="item item1">1</div>
+            <div class="item">2</div>
+            <div class="item">3</div>
+            <div class="item order-1">4</div>
+            <div class="item"></div>
+            <div class="item"></div>
+            <div class="item"></div>
+            <div class="item"></div>
+            <div class="item"></div>
+            <div class="item"></div>
+        </div>
+    </main>
+
+</body>
+
+</html>

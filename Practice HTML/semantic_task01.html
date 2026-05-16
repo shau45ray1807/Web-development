@@ -1,0 +1,64 @@
+<!-- Task 1 Medium
+Apna Personal Portfolio Page banao
+
+Ek personal portfolio page banao jisme tumhara intro, skills, aur ek contact section ho. Poora page proper semantic structure mein hona chahiye aur SEO ke liye basic meta tags bhi lagao.
+
+Semantic tags zaroori: <header>, <nav>, <main>, <section>, <footer>, <address>
+
+Meta tags zaroori: charset, viewport, description, author
+
+Extra: <time> (apni DOB ya koi date), <mark> (koi important skill highlight karo), <abbr> (HTML, CSS ka full form) -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Personal portfolio of Shauray Sharma, a beginner web developer">
+    <meta name="author" content="Shauray">
+    <title>My Portfolio Page</title>
+</head>
+
+<body>
+    <header>
+        <p>Hey, I'm Shauray!</p>
+        <h1>I'm a Beginner Web Developer</h1>
+        <nav>
+            <a href="#about">About</a>
+            <a href="#projects">Projects</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>About Me</h2>
+            <p>I'm Shauray, Currently in class 12th from Sanjay Gandhi Inter Collage Imamganj, Gaya (Bihar).I'm also
+                learning web development.</p>
+                <p>I was born on <time datetime="2005-06-03">3rd June 2005</time></p>
+        </section>
+        <section>
+            <h2>Skills</h2>
+            <p><mark><abbr title="HyperText Markup Language">HTML</abbr></mark> almost done 95%.</p>
+        </section>
+        <section>
+            <h2>Projects</h2>
+            <p>Here are some of my projects:-</p>
+            <ul>
+                <li>Resume</li>
+                <li>Favourite Websites</li>
+                <li>Class Schedule</li>
+                <li>Registration Form</li>
+                <li>Blog Page</li>
+            </ul>
+        </section>
+    </main>
+    <footer>
+        <address>
+            Contact Info: <a href="mailto:shauray@gmail.com">Contact Me</a>
+        </address>
+    </footer>
+   
+</body>
+
+</html>

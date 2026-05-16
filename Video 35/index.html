@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS - More on CSS Selectors</title>
+    <style>
+        /* .box:first-child{
+            background-color: aqua;
+        }
+
+        .box::first-line{
+            color: red;
+        } */
+
+        /* .boxes * {
+            color: violet;
+            border: 2px solid black;
+        }
+
+        p, a, .box, [data-color="primary"] {
+            margin-top: 45px;
+            padding-top: 45px;
+        } */
+
+        /* nth child even: means it count to top and any have even number then it flow the order whatever you say to do.  */
+        /* .box:nth-child(even){
+                background-color: blue;
+            } */
+
+        /* nth last child: means it count to bottom and then it flow the order whatever you say to do. */
+        /* .box:nth-last-child(1){
+            background-color: red;
+        } */
+
+        /* Element ko CSS ke through dynamaticaly insert kiya ja sakta hai  */
+        .boxes::before {
+            content: "Hey, i'm also a box. Using before selector.";
+            color: blue;
+        }
+
+        .boxes::after{
+            content: "Hey, I'm also a box. Using after selector.";
+            color: red;
+        }
+
+        /* selectrion means select karne par  */
+        ::selection{
+            background-color: aqua;
+            color: red;
+        }
+
+        .box::first-letter{
+            color: peru;
+            font-size: 45px;
+        }
+
+        input::placeholder{
+            color: rgb(160, 170, 177);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="boxes">
+        <div data-color="primary" class="box">Hey, I'm a first box</div>
+        <div class="box">Hey, I'm a box</div>
+        <div class="box">Hey, I'm a box</div>
+        <input type="text" placeholder="Type your name here">
+    </div>
+
+</body>
+
+</html>

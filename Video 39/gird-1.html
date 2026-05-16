@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS - Grid-1</title>
+    <style>
+        .container {
+            width: 80vw;
+            height: 100vh;
+            border: 2px solid black;
+            display: grid;
+            /* you wants to make how many column and rows. And you can also name of this lines whatever you want to give */
+            /* grid-template-columns: [pehla] 120px [doosara] 100px [t] ; */
+            /* grid-template-rows: 100px 100px 100px; */
+            grid-template-columns: repeat(4, minmax(100px, 1fr));
+            /* gap: 45px; */
+            row-gap: 19px;
+            column-gap: 45px;
+            /* justify/align items means changeable within cel. Agar cel bada and grid chhota ho toh justify/align items ka use hoga */
+            /* justify/align content means changeable within your container. Agar container bada ho and grid chhota ho toh justify/align content ka use hoga */
+            justify-items: center;
+            align-items: center;
+            /* place content center means justify/align content dono center ho jaye ga */
+            place-content: center;
+        }
+
+        .item {
+            border: 2px solid red;
+            height: 55px;
+            width: 55px;
+        }
+
+        .item-4{
+            /* mera jo row/column ho wo line 1 se line 2 tak ho  */
+            /* grid-row: 1/2; */
+            /* you can do above or you can do below start/end  */
+            /* grid-row-start: 1;
+            grid-row-end: 2;
+            grid-column: doosara/t; */
+        }
+        
+        .item-1{
+            /* mera jo row/column ho wo line 1 se line 2 tak ho  */
+            /* grid-row: 1/2;
+            grid-column: 1/2; */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="item item-1">1</div>
+        <div class="item">2</div>
+        <div class="item">3</div>
+        <div class="item item-4">4</div>
+        <div class="item">5</div>
+    </div>
+
+</body>
+
+</html>

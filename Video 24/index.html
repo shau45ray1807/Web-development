@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS - Shadows and Outlines</title>
+    <style>
+        .box {
+            border: 2px solid black;
+            padding: 30px;
+            box-shadow: 5px 15px 5px rgba(1, 113, 113, 0.776);
+        }
+
+        .text-element {
+            /* box-shadow: h-offset(x) v-offset(y) blur spread color    */
+            text-shadow: 0px 0px 5px darkred;
+            padding: 20px;
+            margin: 45px;
+            border: 2px solid darkblue;
+            /* outline always outsite the border  */
+            outline: 5px solid red;
+            /* Outline-offtset means the distance between thr border and the outline  */
+            outline-offset: 10px;
+            /* Outline curved depends on the border radius */
+            border-radius: 45px;
+
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        I am a box with.
+    </div>
+    <p class="text-element">
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consequatur repudiandae veniam hic incidunt, tempore
+        eveniet ab voluptates fugiat quod voluptas dolorem, possimus perferendis? Neque, adipisci.
+    </p>
+
+</body>
+
+</html>

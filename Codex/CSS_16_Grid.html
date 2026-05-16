@@ -1,0 +1,1602 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Notes - Grid</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,600;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap');
+
+    :root {
+      --bg: #0a0f1e;
+      --bg2: #0d1b2a;
+      --bg3: #0f2340;
+      --bg4: #071120;
+      --accent: #e94560;
+      --green: #06d6a0;
+      --yellow: #ffd166;
+      --blue: #00b4d8;
+      --purple: #9d4edd;
+      --orange: #f77f00;
+      --text: #e8eaf6;
+      --text2: #a8b2d8;
+      --border: #1e3a5f;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Syne', sans-serif;
+      font-size: 15px;
+      line-height: 1.75;
+    }
+
+    .new-page {
+      page-break-before: always;
+      break-before: page;
+    }
+
+    .cover {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: linear-gradient(160deg, #0a0f1e 0%, #0d1b2a 60%, #0f2340 100%);
+      border-bottom: 3px solid var(--accent);
+      padding: 60px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cover::before {
+      content: '';
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0, 180, 216, 0.08) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .cover-badge {
+      background: var(--accent);
+      color: #fff;
+      padding: 5px 18px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+      display: inline-block;
+    }
+
+    .cover h1 {
+      font-size: 68px;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1;
+      letter-spacing: -3px;
+      margin-bottom: 12px;
+    }
+
+    .cover h1 span {
+      color: var(--blue);
+    }
+
+    .cover-subtitle {
+      font-size: 18px;
+      color: var(--text2);
+      margin-bottom: 6px;
+    }
+
+    .cover-course {
+      font-size: 13px;
+      color: var(--yellow);
+      letter-spacing: 1.5px;
+      margin-bottom: 50px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .topics-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      max-width: 850px;
+    }
+
+    .t-pill {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--text2);
+      padding: 5px 14px;
+      font-size: 12px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .page {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 60px 40px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sec-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    h2.sec-title {
+      font-size: 32px;
+      font-weight: 800;
+      color: #fff;
+      border-left: 4px solid var(--blue);
+      padding-left: 16px;
+      margin-bottom: 6px;
+      line-height: 1.2;
+    }
+
+    h2.sec-title .desc {
+      display: block;
+      font-size: 13px;
+      color: var(--text2);
+      font-weight: 400;
+      letter-spacing: 0.5px;
+      margin-top: 5px;
+    }
+
+    .what-box {
+      background: var(--bg2);
+      border-left: 3px solid var(--blue);
+      padding: 16px 20px;
+      margin: 24px 0;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .what-box .wlabel {
+      font-size: 10px;
+      color: var(--blue);
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .what-box p {
+      color: var(--text2);
+      font-size: 14px;
+    }
+
+    .tip,
+    .note,
+    .warn {
+      padding: 12px 18px;
+      margin: 18px 0;
+      border-radius: 0 4px 4px 0;
+      font-size: 13.5px;
+    }
+
+    .tip {
+      background: rgba(6, 214, 160, 0.08);
+      border-left: 3px solid var(--green);
+      color: var(--green);
+    }
+
+    .note {
+      background: rgba(255, 209, 102, 0.08);
+      border-left: 3px solid var(--yellow);
+      color: var(--yellow);
+    }
+
+    .warn {
+      background: rgba(233, 69, 96, 0.08);
+      border-left: 3px solid var(--accent);
+      color: var(--accent);
+    }
+
+    .tip strong,
+    .note strong,
+    .warn strong {
+      font-weight: 700;
+      margin-right: 6px;
+    }
+
+    .code-wrap {
+      margin: 20px 0;
+    }
+
+    .code-label {
+      background: var(--bg3);
+      padding: 6px 14px;
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text2);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+    }
+
+    .dot-r {
+      background: #e94560;
+    }
+
+    .dot-y {
+      background: #ffd166;
+    }
+
+    .dot-g {
+      background: #06d6a0;
+    }
+
+    pre {
+      background: var(--bg4);
+      border: 1px solid var(--border);
+      padding: 20px 22px;
+      overflow-x: auto;
+      border-top: none;
+    }
+
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      line-height: 1.9;
+    }
+
+    .pr { color: #00b4d8; }
+    .vl { color: #06d6a0; }
+    .cm { color: #4a6080; font-style: italic; }
+    .tg { color: #ffd166; }
+    .at { color: #9d4edd; }
+    .pn { color: #a8b2d8; }
+    .sel { color: #f77f00; }
+
+    .tbl-wrap {
+      margin: 20px 0;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+    }
+
+    thead tr {
+      background: var(--bg3);
+    }
+
+    th {
+      padding: 10px 16px;
+      text-align: left;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--blue);
+      letter-spacing: 1px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    td {
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text2);
+      vertical-align: top;
+    }
+
+    td:first-child {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--yellow);
+      font-size: 13px;
+    }
+
+    tbody tr:hover {
+      background: var(--bg2);
+    }
+
+    ic {
+      background: var(--bg3);
+      color: var(--yellow);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12.5px;
+      padding: 1px 7px;
+      border-radius: 3px;
+      border: 1px solid var(--border);
+    }
+
+    h3.sh {
+      font-size: 17px;
+      font-weight: 700;
+      color: #fff;
+      margin: 30px 0 12px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    h3.sh::before {
+      content: '\25A0';
+      color: var(--accent);
+      font-size: 10px;
+    }
+
+    p.para {
+      color: var(--text2);
+      margin: 10px 0;
+      font-size: 14.5px;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 20px 0;
+    }
+
+    .info-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .info-card .ic-head {
+      padding: 8px 14px;
+      font-size: 11px;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 1px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg3);
+    }
+
+    .info-card .ic-body {
+      padding: 14px 16px;
+      font-size: 13px;
+      color: var(--text2);
+      line-height: 1.8;
+    }
+
+    .demo-box {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 20px 24px;
+      margin: 16px 0;
+    }
+
+    .demo-label {
+      font-size: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text2);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .grid-stage {
+      display: grid;
+      gap: 10px;
+      border: 1px dashed var(--border);
+      background: var(--bg4);
+      padding: 14px;
+      min-height: 160px;
+    }
+
+    .g-item {
+      min-height: 52px;
+      display: grid;
+      place-items: center;
+      padding: 10px;
+      background: rgba(0, 180, 216, 0.16);
+      border: 1px solid var(--blue);
+      color: var(--text);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .grid-tracks {
+      grid-template-columns: 120px 1fr 2fr;
+    }
+
+    .grid-span {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .span-a {
+      grid-column: span 2;
+      background: rgba(6, 214, 160, 0.14);
+      border-color: var(--green);
+    }
+
+    .span-b {
+      grid-row: span 2;
+      background: rgba(233, 69, 96, 0.14);
+      border-color: var(--accent);
+    }
+
+    .area-demo {
+      grid-template-columns: 150px 1fr;
+      grid-template-rows: 62px 150px 62px;
+      grid-template-areas:
+        "header header"
+        "sidebar main"
+        "footer footer";
+    }
+
+    .area-header { grid-area: header; background: rgba(0, 180, 216, 0.16); }
+    .area-side { grid-area: sidebar; background: rgba(255, 209, 102, 0.12); border-color: var(--yellow); color: var(--yellow); }
+    .area-main { grid-area: main; background: rgba(6, 214, 160, 0.12); border-color: var(--green); }
+    .area-footer { grid-area: footer; background: rgba(157, 78, 221, 0.14); border-color: var(--purple); }
+
+    .line-graph {
+      position: relative;
+      height: 230px;
+      border: 1px dashed var(--border);
+      background:
+        linear-gradient(rgba(30, 58, 95, 0.5) 2px, transparent 2px),
+        linear-gradient(90deg, rgba(30, 58, 95, 0.5) 2px, transparent 2px);
+      background-size: 25% 33.333%;
+      background-position: 0 0;
+    }
+
+    .line-label {
+      position: absolute;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--yellow);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      padding: 2px 7px;
+    }
+
+    .c1 { left: 0; top: 4px; }
+    .c2 { left: 25%; top: 4px; transform: translateX(-50%); }
+    .c3 { left: 50%; top: 4px; transform: translateX(-50%); }
+    .c4 { left: 75%; top: 4px; transform: translateX(-50%); }
+    .c5 { right: 0; top: 4px; }
+    .r1 { left: 6px; top: 0; }
+    .r2 { left: 6px; top: 33.333%; transform: translateY(-50%); }
+    .r3 { left: 6px; top: 66.666%; transform: translateY(-50%); }
+    .r4 { left: 6px; bottom: 0; }
+
+    .placed-box {
+      position: absolute;
+      left: 25%;
+      top: 33.333%;
+      width: 50%;
+      height: 33.333%;
+      display: grid;
+      place-items: center;
+      background: rgba(6, 214, 160, 0.18);
+      border: 2px solid var(--green);
+      color: var(--text);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+    }
+
+    .auto-fit-demo {
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    }
+
+    .align-demo {
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: 120px;
+      align-items: center;
+      justify-items: center;
+    }
+
+    .align-demo .g-item {
+      min-height: 44px;
+      width: 70px;
+    }
+
+    .dashboard-demo {
+      grid-template-columns: 170px 1fr 1fr;
+      grid-template-rows: 64px 120px 120px;
+      grid-template-areas:
+        "nav nav nav"
+        "side chart stats"
+        "side table table";
+    }
+
+    .dash-nav { grid-area: nav; }
+    .dash-side { grid-area: side; border-color: var(--yellow); color: var(--yellow); background: rgba(255, 209, 102, 0.12); }
+    .dash-chart { grid-area: chart; }
+    .dash-stats { grid-area: stats; border-color: var(--green); background: rgba(6, 214, 160, 0.12); }
+    .dash-table { grid-area: table; border-color: var(--accent); background: rgba(233, 69, 96, 0.12); }
+
+    .footer {
+      text-align: center;
+      padding: 40px;
+      color: var(--text2);
+      font-size: 13px;
+      font-family: 'JetBrains Mono', monospace;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer span {
+      color: var(--accent);
+    }
+
+    @media (max-width: 720px) {
+      .cover h1 {
+        font-size: 44px;
+        letter-spacing: -1px;
+      }
+
+      .page {
+        padding: 44px 22px;
+      }
+
+      h2.sec-title {
+        font-size: 26px;
+      }
+
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+
+      .grid-3,
+      .grid-tracks,
+      .grid-span,
+      .align-demo {
+        grid-template-columns: 1fr;
+      }
+
+      .area-demo,
+      .dashboard-demo {
+        grid-template-columns: 1fr;
+        grid-template-areas: none;
+      }
+
+      .area-demo .g-item,
+      .dashboard-demo .g-item {
+        grid-area: auto;
+      }
+    }
+
+    @media print {
+      @page {
+        size: A4;
+        margin: 12mm;
+      }
+
+      body {
+        background: var(--bg);
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .cover {
+        min-height: 100vh;
+        page-break-after: always;
+        break-after: page;
+      }
+
+      .page {
+        max-width: none;
+        padding: 26px 18px;
+        border-bottom: none;
+        page-break-before: always;
+        break-before: page;
+      }
+
+      .what-box,
+      .tip,
+      .note,
+      .warn,
+      .code-wrap,
+      .tbl-wrap,
+      .info-card,
+      .demo-box {
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+
+      pre {
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="cover">
+    <div class="cover-badge">&#9632; Complete Notes - Topic 16</div>
+    <h1>CSS <span>Grid</span><br>Layout</h1>
+    <p class="cover-subtitle">Two-dimensional layouts, tracks, areas, placement aur responsive grids - Basic se Advanced tak</p>
+    <p class="cover-course">Web Development Course - Shauray</p>
+    <div class="topics-list">
+      <span class="t-pill">display grid</span>
+      <span class="t-pill">rows / columns</span>
+      <span class="t-pill">tracks</span>
+      <span class="t-pill">fr unit</span>
+      <span class="t-pill">repeat()</span>
+      <span class="t-pill">minmax()</span>
+      <span class="t-pill">auto-fit</span>
+      <span class="t-pill">grid areas</span>
+      <span class="t-pill">line placement</span>
+      <span class="t-pill">alignment</span>
+      <span class="t-pill">implicit grid</span>
+      <span class="t-pill">subgrid</span>
+    </div>
+  </div>
+
+  <div class="page new-page">
+    <div class="sec-label">// TOPIC 01 - GRID BASICS</div>
+    <h2 class="sec-title">CSS Grid Kya Hai?
+      <span class="desc">Two-dimensional layout system for rows and columns</span>
+    </h2>
+
+    <div class="what-box">
+      <div class="wlabel">Simple Definition</div>
+      <p>CSS Grid ek powerful layout system hai jo rows aur columns dono ko ek saath control karta hai. Flexbox mostly
+        one-dimensional layout ke liye best hai, jabki Grid two-dimensional page/layout structure ke liye best hai.</p>
+    </div>
+
+    <p class="para">Grid se card galleries, dashboards, page shells, image layouts, magazine layouts, forms, product
+      listings aur complex responsive sections clean CSS se ban sakte hain. Grid parent par <ic>display: grid</ic> lagta
+      hai aur uske direct children grid items ban jaate hain.</p>
+
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>first grid</div>
+      <pre><code><span class="sel">.grid</span> <span class="pn">{</span>
+  <span class="pr">display</span><span class="pn">:</span> <span class="vl">grid</span><span class="pn">;</span>
+  <span class="pr">grid-template-columns</span><span class="pn">:</span> <span class="vl">repeat(3, 1fr)</span><span class="pn">;</span>
+  <span class="pr">gap</span><span class="pn">:</span> <span class="vl">1rem</span><span class="pn">;</span>
+<span class="pn">}</span></code></pre>
+    </div>
+
+    <div class="demo-box">
+      <div class="demo-label">basic 3 column grid</div>
+      <div class="grid-stage grid-3">
+        <div class="g-item">1</div>
+        <div class="g-item">2</div>
+        <div class="g-item">3</div>
+        <div class="g-item">4</div>
+        <div class="g-item">5</div>
+        <div class="g-item">6</div>
+      </div>
+    </div>
+
+    <h3 class="sh">Grid Vocabulary</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Term</th>
+            <th>Meaning</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Grid Container</td>
+            <td>Parent element jisme display: grid hota hai</td>
+          </tr>
+          <tr>
+            <td>Grid Item</td>
+            <td>Grid container ka direct child</td>
+          </tr>
+          <tr>
+            <td>Grid Line</td>
+            <td>Rows/columns ko divide karne wali numbered lines</td>
+          </tr>
+          <tr>
+            <td>Grid Track</td>
+            <td>Do grid lines ke beech row ya column space</td>
+          </tr>
+          <tr>
+            <td>Grid Cell</td>
+            <td>One row and one column ka intersection</td>
+          </tr>
+          <tr>
+            <td>Grid Area</td>
+            <td>Multiple cells ka named or placed region</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="page new-page">
+    <div class="sec-label">// TOPIC 02 - GRID LINES GRAPH</div>
+    <h2 class="sec-title">Grid Lines, Tracks and Cells
+      <span class="desc">Grid ko line numbers aur tracks ke through samajhna</span>
+    </h2>
+
+    <div class="what-box">
+      <div class="wlabel">Graph Concept</div>
+      <p>Grid layout invisible lines se banta hai. 4 columns ke liye 5 column lines hoti hain. 3 rows ke liye 4 row
+        lines hoti hain. Items ko line numbers ke beech place kiya ja sakta hai.</p>
+    </div>
+
+    <div class="demo-box">
+      <div class="demo-label">grid line graph</div>
+      <div class="line-graph">
+        <span class="line-label c1">col 1</span>
+        <span class="line-label c2">2</span>
+        <span class="line-label c3">3</span>
+        <span class="line-label c4">4</span>
+        <span class="line-label c5">5</span>
+        <span class="line-label r1">row 1</span>
+        <span class="line-label r2">2</span>
+        <span class="line-label r3">3</span>
+        <span class="line-label r4">4</span>
+        <div class="placed-box">grid-column: 2 / 4<br>grid-row: 2 / 3</div>
+      </div>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>line placement</div>
+      <pre><code><span class="sel">.featured</span> <span class="pn">{</span>
+  <span class="pr">grid-column</span><span class="pn">:</span> <span class="vl">2 / 4</span><span class="pn">;</span>
+  <span class="pr">grid-row</span><span class="pn">:</span> <span class="vl">2 / 3</span><span class="pn">;</span>
+<span class="pn">}</span></code></pre>
+    </div>
+
+    <div class="tip"><strong>&#9632; Line Rule:</strong> Grid line numbers gaps nahi, lines count karte hain. 3 columns
+      ka matlab line 1, 2, 3, 4.</div>
+  </div>
+
+  <div class="page new-page">
+    <div class="sec-label">// TOPIC 03 - COLUMNS AND ROWS</div>
+    <h2 class="sec-title">grid-template-columns and rows
+      <span class="desc">Explicit grid tracks define karna</span>
+    </h2>
+
+    <p class="para"><ic>grid-template-columns</ic> columns define karta hai. <ic>grid-template-rows</ic> rows define
+      karta hai. In values mein px, %, rem, auto, fr, minmax(), repeat() use ho sakte hain.</p>
+
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>columns and rows</div>
+      <pre><code><span class="sel">.layout</span> <span class="pn">{</span>
+  <span class="pr">display</span><span class="pn">:</span> <span class="vl">grid</span><span class="pn">;</span>
+  <span class="pr">grid-template-columns</span><span class="pn">:</span> <span class="vl">240px 1fr 2fr</span><span class="pn">;</span>
+  <span class="pr">grid-template-rows</span><span class="pn">:</span> <span class="vl">80px 1fr</span><span class="pn">;</span>
+  <span class="pr">gap</span><span class="pn">:</span> <span class="vl">16px</span><span class="pn">;</span>
+<span class="pn">}</span></code></pre>
+    </div>
+
+    <div class="demo-box">
+      <div class="demo-label">track size graph - 120px 1fr 2fr</div>
+      <div class="grid-stage grid-tracks">
+        <div class="g-item">120px</div>
+        <div class="g-item">1fr</div>
+        <div class="g-item">2fr</div>
+      </div>
+    </div>
+
+    <h3 class="sh">Track Units</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Unit</th>
+            <th>Meaning</th>
+            <th>Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>px</td>
+            <td>Fixed size</td>
+            <td>Fixed sidebar, known dimensions</td>
+          </tr>
+          <tr>
+            <td>%</td>
+            <td>Parent size ka percentage</td>
+            <td>Relative tracks</td>
+          </tr>
+          <tr>
+            <td>fr</td>
+            <td>Available free space ka fraction</td>
+            <td>Flexible columns</td>
+          </tr>
+          <tr>
+            <td>auto</td>
+            <td>Content-based size</td>
+            <td>Natural width/height tracks</td>
+          </tr>
+          <tr>
+            <td>minmax()</td>
+            <td>Minimum and maximum range</td>
+            <td>Responsive cards</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="page new-page">
+    <div class="sec-label">// TOPIC 04 - FR, REPEAT, MINMAX</div>
+    <h2 class="sec-title">fr, repeat() and minmax()
+      <span class="desc">Grid ka responsive sizing toolkit</span>
+    </h2>
+
+    <div class="what-box">
+      <div class="wlabel">Important Tools</div>
+      <p><ic>fr</ic> available free space ko fractions mein divide karta hai. <ic>repeat()</ic> repeated tracks ko short
+        banata hai. <ic>minmax()</ic> track ko flexible min/max range deta hai.</p>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>fr repeat minmax</div>
+      <pre><code><span class="sel">.grid</span> <span class="pn">{</span>
+  <span class="pr">display</span><span class="pn">:</span> <span class="vl">grid</span><span class="pn">;</span>
+  <span class="pr">grid-template-columns</span><span class="pn">:</span> <span class="vl">repeat(3, 1fr)</span><span class="pn">;</span>
+<span class="pn">}</span>
+
+<span class="sel">.responsive-grid</span> <span class="pn">{</span>
+  <span class="pr">display</span><span class="pn">:</span> <span class="vl">grid</span><span class="pn">;</span>
+  <span class="pr">grid-template-columns</span><span class="pn">:</span> <span class="vl">repeat(auto-fit, minmax(220px, 1fr))</span><span class="pn">;</span>
+<span class="pn">}</span></code></pre>
+    </div>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Expression</th>
+            <th>Meaning</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1fr</td>
+            <td>Available space ka 1 fraction</td>
+          </tr>
+          <tr>
+            <td>2fr</td>
+            <td>1fr se double share</td>
+          </tr>
+          <tr>
+            <td>repeat(4, 1fr)</td>
+            <td>4 equal flexible columns</td>
+          </tr>
+          <tr>
+            <td>minmax(200px, 1fr)</td>
+            <td>Minimum 200px, max available flexible space</td>
+          </tr>
+          <tr>
+            <td>repeat(auto-fit, minmax(220px, 1fr))</td>
+            <td>Responsive columns without many media queries</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip"><strong>&#9632; Power Pattern:</strong> <ic>repeat(auto-fit, minmax(250px, 1fr))</ic> responsive
+      card grids ke liye top-level professional pattern hai.</div>
+  </div>
+
+  <div class="page new-page">
+    <div class="sec-label">// TOPIC 05 - GAP AND PLACEMENT</div>
+    <h2 class="sec-title">gap, grid-column and grid-row
+      <span class="desc">Spacing aur item spanning control karna</span>
+    </h2>
+
+    <p class="para"><ic>gap</ic> grid tracks ke beech spacing add karta hai. <ic>grid-column</ic> aur
+      <ic>grid-row</ic> items ko lines ke beech place ya span karte hain.</p>
+
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>span examples</div>
+      <pre><code><span class="sel">.wide</span> <span class="pn">{</span>
+  <span class="pr">grid-column</span><span class="pn">:</span> <span class="vl">span 2</span><span class="pn">;</span>
+<span class="pn">}</span>
+
+<span class="sel">.tall</span> <span class="pn">{</span>
+  <span class="pr">grid-row</span><span class="pn">:</span> <span class="vl">span 2</span><span class="pn">;</span>
+<span class="pn">}</span>
+
+<span class="sel">.hero</span> <span class="pn">{</span>
+  <span class="pr">grid-column</span><span class="pn">:</span> <span class="vl">1 / -1</span><span class="pn">;</span>
+<span class="pn">}</span></code></pre>
+    </div>
+
+    <div class="demo-box">
+      <div class="demo-label">spanning graph</div>
+      <div class="grid-stage grid-span">
+        <div class="g-item span-a">span 2 columns</div>
+        <div class="g-item">B</div>
+        <div class="g-item">C</div>
+        <div class="g-item span-b">span 2 rows</div>
+        <div class="g-item">E</div>
+        <div class="g-item">F</div>
+        <div class="g-item">G</div>
+      </div>
+    </div>
+
+    <div class="note"><strong>&#9632; Shortcut:</strong> <ic>grid-column: 1 / -1</ic> ka matlab first line se last line
+      tak full row span karna.</div>
+  </div>
+
+  <div class="page new-page">
+    <div class="sec-label">// TOPIC 06 - TEMPLATE AREAS</div>
+    <h2 class="sec-title">grid-template-areas
+      <span class="desc">Layout ko visual names ke saath define karna</span>
+    </h2>
+
+    <div class="what-box">
+      <div class="wlabel">Definition</div>
+      <p><ic>grid-template-areas</ic> layout ko readable names se define karta hai. Isse header, sidebar, main, footer
+        jaisi page structures very clear CSS mein likhi ja sakti hain.</p>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>grid areas</div>
+      <pre><code><span class="sel">.page-layout</span> <span class="pn">{</span>
+  <span class="pr">display</span><span class="pn">:</span> <span class="vl">grid</span><span class="pn">;</span>
+  <span class="pr">grid-template-columns</span><span class="pn">:</span> <span class="vl">240px 1fr</span><span class="pn">;</span>
+  <span class="pr">grid-template-areas</span><span class="pn">:</span>
+    <span class="vl">"header header"</span>
+    <span class="vl">"sidebar main"</span>
+    <span class="vl">"footer footer"</span><span class="pn">;</span>
+<span class="pn">}</span>
+
+<span class="sel">header</span> <span class="pn">{</span> <span class="pr">grid-area</span><span class="pn">:</span> <span class="vl">header</span><span class="pn">;</span> <span class="pn">}</span>
+<span class="sel">aside</span> <span class="pn">{</span> <span class="pr">grid-area</span><span class="pn">:</span> <span class="vl">sidebar</span><span class="pn">;</span> <span class="pn">}</span>
+<span class="sel">main</span> <span class="pn">{</span> <span class="pr">grid-area</span><span class="pn">:</span> <span class="vl">main</span><span class="pn">;</span> <span class="pn">}</span>
+<span class="sel">footer</span> <span class="pn">{</span> <span class="pr">grid-area</span><span class="pn">:</span> <span class="vl">footer</span><span class="pn">;</span> <span class="pn">}</span></code></pre>
+    </div>
+
+    <div class="demo-box">
+      <div class="demo-label">template areas graph</div>
+      <div class="grid-stage area-demo">
+        <div class="g-item area-header">header</div>
+        <div class="g-item area-side">sidebar</div>
+        <div class="g-item area-main">main</div>
+        <div class="g-item area-footer">footer</div>
+      </div>
+    </div>
+
+    <div class="warn"><strong>&#9632; Area Rule:</strong> Same named area rectangle shape mein honi chahiye. Broken/L
+      shaped area invalid ho sakti hai.</div>
+  </div>
+
+  <div class="page new-page">
+    <div class="sec-label">// TOPIC 07 - AUTO-FIT AND AUTO-FILL</div>
+    <h2 class="sec-title">auto-fit vs auto-fill
+      <span class="desc">Responsive grids without exact breakpoint count</span>
+    </h2>
+
+    <p class="para"><ic>auto-fit</ic> aur <ic>auto-fill</ic> repeat() ke saath dynamic columns create karte hain.
+      Dono available space ke according columns fit karte hain, but empty tracks handle karne ka behavior different hota hai.</p>
+
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>auto responsive grid</div>
+      <pre><code><span class="sel">.cards</span> <span class="pn">{</span>
+  <span class="pr">display</span><span class="pn">:</span> <span class="vl">grid</span><span class="pn">;</span>
+  <span class="pr">grid-template-columns</span><span class="pn">:</span> <span class="vl">repeat(auto-fit, minmax(180px, 1fr))</span><span class="pn">;</span>
+  <span class="pr">gap</span><span class="pn">:</span> <span class="vl">1rem</span><span class="pn">;</span>
+<span class="pn">}</span></code></pre>
+    </div>
+
+    <div class="demo-box">
+      <div class="demo-label">auto-fit + minmax graph</div>
+      <div class="grid-stage auto-fit-demo">
+        <div class="g-item">Card</div>
+        <div class="g-item">Card</div>
+        <div class="g-item">Card</div>
+        <div class="g-item">Card</div>
+        <div class="g-item">Card</div>
+      </div>
+    </div>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Value</th>
+            <th>Simple Meaning</th>
+            <th>Practical Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>auto-fit</td>
+            <td>Empty tracks collapse, items stretch</td>
+            <td>Most responsive card grids</td>
+          </tr>
+          <tr>
+            <td>auto-fill</td>
+            <td>Empty tracks preserved</td>
+            <td>When track slots should remain</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip"><strong>&#9632; Beginner Choice:</strong> Responsive cards ke liye usually <ic>auto-fit</ic> use
+      karo. Jab empty columns preserve karne ka specific reason ho tab <ic>auto-fill</ic>.</div>
+  </div>
+
+  <div class="page new-page">
+    <div class="sec-label">// TOPIC 08 - IMPLICIT GRID</div>
+    <h2 class="sec-title">Explicit and Implicit Grid
+      <span class="desc">Defined tracks aur automatically created tracks</span>
+    </h2>
+
+    <div class="what-box">
+      <div class="wlabel">Definition</div>
+      <p>Explicit grid woh hoti hai jo hum <ic>grid-template-columns</ic> aur <ic>grid-template-rows</ic> se define
+        karte hain. Agar extra items ya placement defined grid se bahar chala jaaye, browser implicit tracks create karta hai.</p>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>implicit rows</div>
+      <pre><code><span class="sel">.grid</span> <span class="pn">{</span>
+  <span class="pr">display</span><span class="pn">:</span> <span class="vl">grid</span><span class="pn">;</span>
+  <span class="pr">grid-template-columns</span><span class="pn">:</span> <span class="vl">repeat(3, 1fr)</span><span class="pn">;</span>
+  <span class="pr">grid-auto-rows</span><span class="pn">:</span> <span class="vl">120px</span><span class="pn">;</span>
+  <span class="pr">grid-auto-flow</span><span class="pn">:</span> <span class="vl">row</span><span class="pn">;</span>
+<span class="pn">}</span></code></pre>
+    </div>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>grid-auto-rows</td>
+            <td>Implicit rows ka size define karta hai</td>
+          </tr>
+          <tr>
+            <td>grid-auto-columns</td>
+            <td>Implicit columns ka size define karta hai</td>
+          </tr>
+          <tr>
+            <td>grid-auto-flow</td>
+            <td>Auto placement row, column, dense behavior control karta hai</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note"><strong>&#9632; Advanced Note:</strong> <ic>grid-auto-flow: dense</ic> gaps fill kar sakta hai,
+      but visual order change ho sakta hai. Accessibility and reading order carefully test karo.</div>
+  </div>
+
+  <div class="page new-page">
+    <div class="sec-label">// TOPIC 09 - ALIGNMENT</div>
+    <h2 class="sec-title">Grid Alignment
+      <span class="desc">Items aur complete grid ko align karna</span>
+    </h2>
+
+    <p class="para">Grid mein alignment do levels par hoti hai: grid items apne cells ke andar kaise align honge, aur
+      complete grid container ke available space mein kaise align hoga.</p>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Axis / Level</th>
+            <th>Use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>justify-items</td>
+            <td>Inline axis, items inside cells</td>
+            <td>All items horizontal cell alignment</td>
+          </tr>
+          <tr>
+            <td>align-items</td>
+            <td>Block axis, items inside cells</td>
+            <td>All items vertical cell alignment</td>
+          </tr>
+          <tr>
+            <td>place-items</td>
+            <td>align-items + justify-items</td>
+            <td>Quick item centering</td>
+          </tr>
+          <tr>
+            <td>justify-content</td>
+            <td>Whole grid inline axis</td>
+            <td>Grid tracks container mein align</td>
+          </tr>
+          <tr>
+            <td>align-content</td>
+            <td>Whole grid block axis</td>
+            <td>Grid tracks vertical alignment</td>
+          </tr>
+          <tr>
+            <td>place-content</td>
+            <td>align-content + justify-content</td>
+            <td>Whole grid quick alignment</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="demo-box">
+      <div class="demo-label">place-items center graph</div>
+      <div class="grid-stage align-demo">
+        <div class="g-item">A</div>
+        <div class="g-item">B</div>
+        <div class="g-item">C</div>
+      </div>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>grid alignment</div>
+      <pre><code><span class="sel">.grid</span> <span class="pn">{</span>
+  <span class="pr">display</span><span class="pn">:</span> <span class="vl">grid</span><span class="pn">;</span>
+  <span class="pr">place-items</span><span class="pn">:</span> <span class="vl">center</span><span class="pn">;</span>
+<span class="pn">}</span></code></pre>
+    </div>
+  </div>
+
+  <div class="page new-page">
+    <div class="sec-label">// TOPIC 10 - RESPONSIVE GRID PATTERNS</div>
+    <h2 class="sec-title">Real Project Grid Patterns
+      <span class="desc">Cards, dashboard, page layout aur magazine style sections</span>
+    </h2>
+
+    <h3 class="sh">Responsive Card Grid</h3>
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>card grid pattern</div>
+      <pre><code><span class="sel">.cards</span> <span class="pn">{</span>
+  <span class="pr">display</span><span class="pn">:</span> <span class="vl">grid</span><span class="pn">;</span>
+  <span class="pr">grid-template-columns</span><span class="pn">:</span> <span class="vl">repeat(auto-fit, minmax(240px, 1fr))</span><span class="pn">;</span>
+  <span class="pr">gap</span><span class="pn">:</span> <span class="vl">1rem</span><span class="pn">;</span>
+<span class="pn">}</span></code></pre>
+    </div>
+
+    <h3 class="sh">Dashboard Layout</h3>
+    <div class="demo-box">
+      <div class="demo-label">dashboard grid graph</div>
+      <div class="grid-stage dashboard-demo">
+        <div class="g-item dash-nav">nav</div>
+        <div class="g-item dash-side">side</div>
+        <div class="g-item dash-chart">chart</div>
+        <div class="g-item dash-stats">stats</div>
+        <div class="g-item dash-table">table</div>
+      </div>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>dashboard areas</div>
+      <pre><code><span class="sel">.dashboard</span> <span class="pn">{</span>
+  <span class="pr">display</span><span class="pn">:</span> <span class="vl">grid</span><span class="pn">;</span>
+  <span class="pr">grid-template-columns</span><span class="pn">:</span> <span class="vl">220px 1fr 1fr</span><span class="pn">;</span>
+  <span class="pr">grid-template-areas</span><span class="pn">:</span>
+    <span class="vl">"nav nav nav"</span>
+    <span class="vl">"side chart stats"</span>
+    <span class="vl">"side table table"</span><span class="pn">;</span>
+<span class="pn">}</span></code></pre>
+    </div>
+  </div>
+
+  <div class="page new-page">
+    <div class="sec-label">// TOPIC 11 - GRID VS FLEXBOX</div>
+    <h2 class="sec-title">Grid vs Flexbox
+      <span class="desc">Kaunsa layout system kab choose karein</span>
+    </h2>
+
+    <div class="what-box">
+      <div class="wlabel">Simple Decision</div>
+      <p>Flexbox one-dimensional flow ke liye best hai: row ya column. Grid two-dimensional structure ke liye best hai:
+        rows and columns together. Dono competitors nahi, partners hain.</p>
+    </div>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Need</th>
+            <th>Choose</th>
+            <th>Reason</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Navbar links</td>
+            <td>Flexbox</td>
+            <td>One row alignment</td>
+          </tr>
+          <tr>
+            <td>Button group</td>
+            <td>Flexbox</td>
+            <td>Inline distribution</td>
+          </tr>
+          <tr>
+            <td>Product card grid</td>
+            <td>Grid</td>
+            <td>Rows and columns</td>
+          </tr>
+          <tr>
+            <td>Dashboard page</td>
+            <td>Grid</td>
+            <td>Named areas and 2D control</td>
+          </tr>
+          <tr>
+            <td>Card internal layout</td>
+            <td>Flexbox</td>
+            <td>Vertical item spacing/button bottom</td>
+          </tr>
+          <tr>
+            <td>Outer page shell</td>
+            <td>Grid</td>
+            <td>Header/sidebar/main/footer structure</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip"><strong>&#9632; Professional Pattern:</strong> Outer layout Grid se banao, component ke andar
+      alignment Flexbox se. Ye combination very common hai.</div>
+  </div>
+
+  <div class="page new-page">
+    <div class="sec-label">// TOPIC 12 - ADVANCED GRID</div>
+    <h2 class="sec-title">Advanced Grid Concepts
+      <span class="desc">Named lines, fit-content, masonry thinking, subgrid and dense flow</span>
+    </h2>
+
+    <h3 class="sh">Named Grid Lines</h3>
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>named lines</div>
+      <pre><code><span class="sel">.layout</span> <span class="pn">{</span>
+  <span class="pr">display</span><span class="pn">:</span> <span class="vl">grid</span><span class="pn">;</span>
+  <span class="pr">grid-template-columns</span><span class="pn">:</span> <span class="vl">[sidebar-start] 240px [sidebar-end content-start] 1fr [content-end]</span><span class="pn">;</span>
+<span class="pn">}</span>
+
+<span class="sel">.main</span> <span class="pn">{</span>
+  <span class="pr">grid-column</span><span class="pn">:</span> <span class="vl">content-start / content-end</span><span class="pn">;</span>
+<span class="pn">}</span></code></pre>
+    </div>
+
+    <h3 class="sh">fit-content and clamp-like Sizing</h3>
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>fit content</div>
+      <pre><code><span class="sel">.grid</span> <span class="pn">{</span>
+  <span class="pr">grid-template-columns</span><span class="pn">:</span> <span class="vl">fit-content(260px) 1fr</span><span class="pn">;</span>
+<span class="pn">}</span></code></pre>
+    </div>
+
+    <h3 class="sh">Subgrid</h3>
+    <p class="para"><ic>subgrid</ic> child grid ko parent grid ke tracks inherit karne deta hai. Yeh advanced layout
+      alignment ke liye useful hai, especially cards/forms mein jahan nested content parent columns align kare.</p>
+
+    <div class="code-wrap">
+      <div class="code-label"><span class="dot dot-r"></span><span class="dot dot-y"></span><span
+          class="dot dot-g"></span>subgrid idea</div>
+      <pre><code><span class="sel">.card</span> <span class="pn">{</span>
+  <span class="pr">display</span><span class="pn">:</span> <span class="vl">grid</span><span class="pn">;</span>
+  <span class="pr">grid-template-rows</span><span class="pn">:</span> <span class="vl">subgrid</span><span class="pn">;</span>
+<span class="pn">}</span></code></pre>
+    </div>
+
+    <div class="note"><strong>&#9632; Advanced Note:</strong> Subgrid modern feature hai. Use karte time browser support
+      check karna good habit hai.</div>
+  </div>
+
+  <div class="page new-page">
+    <div class="sec-label">// TOPIC 13 - COMMON MISTAKES</div>
+    <h2 class="sec-title">Common Mistakes and Fixes
+      <span class="desc">Grid bugs ko quickly identify karna</span>
+    </h2>
+
+    <div class="two-col">
+      <div class="info-card">
+        <div class="ic-head" style="color:var(--accent);">MISTAKE</div>
+        <div class="ic-body">
+          Grid items direct children rule bhoolna.<br>
+          Line numbers tracks samajh lena.<br>
+          fr unit ko percentage samajhna.<br>
+          grid-template-areas mein broken shape banana.<br>
+          Fixed columns se mobile overflow karna.<br>
+          Flexbox ka kaam Grid se force karna.<br>
+          align-items vs align-content confuse karna.
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="ic-head" style="color:var(--green);">FIX</div>
+        <div class="ic-body">
+          Direct children inspect karo.<br>
+          Lines always tracks se one extra hoti hain.<br>
+          fr available free space share karta hai.<br>
+          Areas rectangle shape mein rakho.<br>
+          minmax and auto-fit responsive pattern use karo.<br>
+          One-dimensional layouts ke liye Flexbox use karo.<br>
+          Item alignment and grid alignment separate samjho.
+        </div>
+      </div>
+    </div>
+
+    <h3 class="sh">Debugging Checklist</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Check</th>
+            <th>Question</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Container</td>
+            <td>Kya parent par display: grid laga hai?</td>
+          </tr>
+          <tr>
+            <td>Direct child</td>
+            <td>Kya item grid container ka direct child hai?</td>
+          </tr>
+          <tr>
+            <td>Tracks</td>
+            <td>Columns/rows expected size define hain?</td>
+          </tr>
+          <tr>
+            <td>Lines</td>
+            <td>grid-column line numbers correct hain?</td>
+          </tr>
+          <tr>
+            <td>Areas</td>
+            <td>Template area names match kar rahe hain?</td>
+          </tr>
+          <tr>
+            <td>Responsive</td>
+            <td>Small screen par minmax/auto-fit ya media query needed hai?</td>
+          </tr>
+          <tr>
+            <td>Overflow</td>
+            <td>Any fixed width track page ko side-scroll kara raha hai?</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warn"><strong>&#9632; Big Rule:</strong> Grid ko tab use karo jab rows and columns ka structure important
+      ho. Simple single-axis alignment ke liye Flexbox zyada natural ho sakta hai.</div>
+  </div>
+
+  <div class="page new-page">
+    <div class="sec-label">// QUICK REFERENCE</div>
+    <h2 class="sec-title">CSS Grid - Complete Summary
+      <span class="desc">Revision ke liye all important Grid properties ek jagah</span>
+    </h2>
+
+    <h3 class="sh">Container Properties</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Meaning</th>
+            <th>Example</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>display</td>
+            <td>Grid container banana</td>
+            <td>display: grid</td>
+          </tr>
+          <tr>
+            <td>grid-template-columns</td>
+            <td>Explicit columns define</td>
+            <td>repeat(3, 1fr)</td>
+          </tr>
+          <tr>
+            <td>grid-template-rows</td>
+            <td>Explicit rows define</td>
+            <td>80px 1fr auto</td>
+          </tr>
+          <tr>
+            <td>gap</td>
+            <td>Rows/columns ke beech spacing</td>
+            <td>gap: 1rem</td>
+          </tr>
+          <tr>
+            <td>grid-template-areas</td>
+            <td>Named layout areas</td>
+            <td>"header header" "side main"</td>
+          </tr>
+          <tr>
+            <td>grid-auto-rows</td>
+            <td>Implicit row size</td>
+            <td>grid-auto-rows: 120px</td>
+          </tr>
+          <tr>
+            <td>grid-auto-flow</td>
+            <td>Auto placement direction</td>
+            <td>row, column, dense</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sh">Item Properties</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Meaning</th>
+            <th>Example</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>grid-column</td>
+            <td>Column placement/span</td>
+            <td>1 / -1, span 2</td>
+          </tr>
+          <tr>
+            <td>grid-row</td>
+            <td>Row placement/span</td>
+            <td>2 / 4, span 2</td>
+          </tr>
+          <tr>
+            <td>grid-area</td>
+            <td>Named area assign or shorthand</td>
+            <td>grid-area: main</td>
+          </tr>
+          <tr>
+            <td>justify-self</td>
+            <td>One item inline alignment</td>
+            <td>center, end, stretch</td>
+          </tr>
+          <tr>
+            <td>align-self</td>
+            <td>One item block alignment</td>
+            <td>center, start, end</td>
+          </tr>
+          <tr>
+            <td>place-self</td>
+            <td>align-self + justify-self</td>
+            <td>place-self: center</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sh">Fast Decision Guide</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Need</th>
+            <th>Choose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Equal 3 columns</td>
+            <td>repeat(3, 1fr)</td>
+          </tr>
+          <tr>
+            <td>Responsive cards without many media queries</td>
+            <td>repeat(auto-fit, minmax(240px, 1fr))</td>
+          </tr>
+          <tr>
+            <td>Full width item</td>
+            <td>grid-column: 1 / -1</td>
+          </tr>
+          <tr>
+            <td>Item 2 columns wide</td>
+            <td>grid-column: span 2</td>
+          </tr>
+          <tr>
+            <td>Page shell with header/sidebar/main/footer</td>
+            <td>grid-template-areas</td>
+          </tr>
+          <tr>
+            <td>One row navbar</td>
+            <td>Flexbox</td>
+          </tr>
+          <tr>
+            <td>Complex dashboard</td>
+            <td>CSS Grid</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sh">Best Practices - Yaad Rakhna</h3>
+    <div class="two-col">
+      <div class="info-card">
+        <div class="ic-head" style="color:var(--green);">DO</div>
+        <div class="ic-body">
+          Rows and columns ke liye Grid use karo.<br>
+          Responsive cards ke liye auto-fit + minmax use karo.<br>
+          Readable page layouts ke liye grid-template-areas use karo.<br>
+          Spacing ke liye gap use karo.<br>
+          Line numbers carefully count karo.<br>
+          Outer layout Grid, inner alignment Flexbox use karo.<br>
+          Mobile overflow test karo.
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="ic-head" style="color:var(--accent);">AVOID</div>
+        <div class="ic-body">
+          Simple one-row alignment Grid se overcomplicate karna.<br>
+          Fixed widths se responsive break karna.<br>
+          Broken template areas banana.<br>
+          Direct child rule bhoolna.<br>
+          auto-fit/auto-fill difference ignore karna.<br>
+          dense flow se accessibility order break karna.<br>
+          Grid and Flexbox ko competitors samajhna.
+        </div>
+      </div>
+    </div>
+
+    <div
+      style="margin-top:40px; padding:24px; background:var(--bg2); border:1px solid var(--border); border-radius:4px;">
+      <p
+        style="font-size:13px; color:var(--text2); margin-bottom:14px; font-family:'JetBrains Mono',monospace; letter-spacing:1px;">
+        &gt; NEXT TOPICS TO COVER</p>
+      <div style="display:flex; flex-wrap:wrap; gap:8px;">
+        <span class="t-pill">Grid vs Flexbox</span>
+        <span class="t-pill">Responsive Design</span>
+        <span class="t-pill">Container Queries</span>
+        <span class="t-pill">Pseudo Classes</span>
+        <span class="t-pill">Transitions</span>
+        <span class="t-pill">Animations</span>
+        <span class="t-pill">Forms Styling</span>
+        <span class="t-pill">CSS Architecture</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Made with <span>&#9829;</span> for Web Development Course learners<br>
+    Shauray ke saath CSS seekhte raho &#128640; &nbsp;|&nbsp; Topic 16 - CSS Grid
+  </div>
+</body>
+
+</html>

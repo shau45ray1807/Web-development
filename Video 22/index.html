@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS - px, rem, em, vh, vw, % and more </title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html{
+            font-size: 12px;
+        }
+
+        .box {
+            box-sizing: border-box;
+            border: 2px solid black;
+            /* width: 1536px; */
+            width: 80vw;
+            height: 10vh;
+            margin: auto;
+            background-color: aquamarine;
+        }
+
+        .container {
+            box-sizing: border-box;
+            border: 2px solid black;
+            /* width: 1536px; */
+            width: 80vw;
+            /* height: 80vh; */
+            min-height: 80vh;
+            margin: 23px auto;
+            /* font-size: 18px; */
+            background-color: aquamarine;
+        }
+
+        .container > div {
+            font-size: 2rem;
+            border: 2px solid red;
+            width: 50%;
+        }
+
+        .container > div > div {
+            border: 2px solid blue;
+            width: 50%;
+        }
+        ]
+
+        .mycont{
+            box-sizing: border-box;
+            border: 2px solid black;
+            font-size: 22px;
+            margin: 23px auto;
+            /* width: 100vmin; */
+            width: 80vw;
+            background-color: aqua;
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Values_and_Units -->
+
+    <div class="box">
+        This is a box.
+    </div>
+    <div class="container">
+        <div>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nemo velit exercitationem nisi quas veritatis
+            excepturi dolore, temporibus est inventore eius neque architecto doloremque harum impedit, expedita
+            provident voluptatem totam odit ducimus quae magni! Earum ducimus ratione illo fugit. Fuga porro dolores,
+            illum totam debitis quia doloribus quae sint ducimus et. Repudiandae distinctio nihil voluptatem
+            consequuntur recusandae?
+            <div>
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Illum quidem minima, quam et aliquam culpa, repellendus amet necessitatibus officiis veritatis officia, consectetur omnis.
+            </div>
+        </div>
+            <!-- Expand this to see that this container will adjust its height based on its content Lorem9999 -->
+    </div>
+    <div class="mycont">
+        I am a also a another container.
+    </div>
+
+</body>
+
+</html>

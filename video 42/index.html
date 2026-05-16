@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS - Transforms</title>
+    <style>
+
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .box{
+            height: 50px;
+            width: 50px;
+            background-color: beige;
+            border: 2px solid black;
+            /* transform: rotate(40deg); */
+
+            /* 0.25turn = 90 degree, 0.5turn = 180 degree, 0.75turn = 270 degree and 1.0turn = 360 degree */
+            transform: rotate(45deg);
+
+            /* ek origin(origin means jo ham graph banate hai toh uska jo x to -x and y to -y ka ke bichh ka point hota O wahi origin ) ke anushaar rotate karna  */
+            transform-origin: 0% 0%;
+
+            /* You want to rotate according to axis X,Y and Z axises */
+            /* transform: rotateX(45deg); */
+            /* transform: rotateY(45deg); */
+
+            /* scale means vahi box bada karna according to number whatever i give  */
+            /* transform: scale(1.6); */
+            
+            /* scale axis (X,Y and it's negative direction and not in z axis) means vahi box axis ke anusaar bada karna according to number whatever i give  */
+            /* transform: scalex(1.6); */
+
+            /* skew means box ko top left to bottom right se khich dena  */
+            /* transform: skew(45deg); */
+            
+            /* skew axis (X, Y and it's negative direction and not in z axis) means box ko top left to bottom right se khich dena  */
+            /* transform: skewy(45deg); */
+
+            /* translate(45%) (45px) means ditna ham us box ke isase ko ghaskhana chahte hai   */
+            /* transform: translate(45%); */
+
+            /* translate axis (X, Y and Z and it's negative direction) (45%) (45px) means ditna ham us box ke isase ko jo axis me ghaskhana chahte hai   */
+            /* transform: translatey(45%); */
+
+            /* multiple transform poperty use in one box like this it means using space key */
+            /* transform: translatey(100%) skewx(40deg) translatex(40%); */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container{
+            width: 100vw;
+            height: 80vh;
+            border: 2px solid purple;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="box">
+            box
+        </div>
+    </div>
+
+</body>
+
+</html>
