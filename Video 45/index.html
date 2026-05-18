@@ -1,1 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS - Transition Property</title>
+    <style>
+        .container {
+            background-color: antiquewhite;
+            width: 50vw;
+            height: 40vh;
+        }
+
+        .box {
+            background-color: aqua;
+            width: 5vw;
+            height: 4vh;
+
+            /* transition-property means jis property me aap transition lagana chahte hai  */
+            /* transition-property: transform; */
+            /* transition-property: all; */
+            /* transition-property: background-color, transform; */
+
+            /* transition-duration means yeh animation kitna der tak chalega */
+            /* transition-duration: 3s; */
+
+            /* transition-timing-function means transition ka function kaya hoga ya kaisa hoga transition yeh aap simply saare option ko ek ka kar ke check kar sakte hai  */
+            /* transition-timing-function: cubic-bezier(0.42, 0, 0.59, 1.13); */
+
+            /* transition-delay means yeh animation kitne der baad chalega  */
+            /* transition-delay: 1s; */
+
+            /* transition: (transition-property) (transition-duration) (transition-timing-function) (transition-delay) */
+            transition: all 3s ease-in-out 1s;
+        }
+
+        .translate {
+            transform: translateX(10vw) translateY(10vh) scale(2);
+            background-color: blue;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="box translate"></div>
+    </div>
+
+</body>
+
+</html>
