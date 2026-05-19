@@ -1,1 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS - Object-fit and Position</title>
+    <style>
+        .container {
+            height: 488px;
+            width: 466px;
+            border: 2px solid black;
+            /* background-color: aqua; */
+
+            /* background-image: ; means aap apne image koa as a background set kar sakte hain. And use background-position: ; ke help se aap apne image ko container ke kis position par rakhna chahte hain yeh decide kar skate hain. By default background-position: 0% 0%; hota hain.  */
+            /* background-image: url(https://cdn.pixabay.com/photo/2021/12/21/09/40/maji-6884912_1280.jpg); */
+            
+            /* Agar image chhoti ho and container bara toh image container me repeat hota hai and ise background-repeat ke help se hata sakte hao no-repeat backgound-repeat me laga kar  and aap chaye toh image ko kisi bhi specific axis me repeat kara sakte hain like repeat-x, repeat-y and repeat(default) */
+            background-image: url(https://us.123rf.com/450wm/wavebreakmediamicro/wavebreakmediamicro1606/wavebreakmediamicro160606514/58211984-young-girl-clicking-a-photograph-from-camera-in-park.jpg);
+            background-repeat: no-repeat;
+            
+            background-position: center center;
+
+            /* background-clip: ; ke baare me aap MDN Reference se check kar lijiye. Simply aap apne mouse pointer ke background-clip: ke upar rakhiye and ek box open hoga uske bottom me MDN Reference likha uaa hoga. */
+            background-clip: border-box;
+        }
+
+        img {
+            height: 488px;
+            width: 466px;
+
+            /* object-fit: cover means diye gaye width and height ke according image ko crop kar dega taki image container ke andar fit ho jaye. Agar object-fit: cover nahi diya hota to image stretch ho jata aur aspect ratio kharab ho jata. */
+            object-fit: cover;
+
+            /* object-position: _________; means image ko container ke kis position par rakhna hai. It means image ka kaun sa portion container me show karega yeh aap khud choose kar sakte hain. */
+            /* object-position: top right; */
+            /* object-position: 10px 20px; */
+            object-position: 50% 50%;
+
+            /* object-fit: contain means diye gaye width and height ke according image ko scale kar dega taki image container ke andar fit ho jaye. Agar object-fit: contain nahi diya hota to image stretch ho jata aur aspect ratio kharab ho jata. */
+            /* object-fit: contain; */
+
+            /* default property hai object-fit: fill  */
+            /* object-fit: fill; */
+
+            /* object-fit: scale-down; */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- <img src="https://cdn.pixabay.com/photo/2021/12/21/09/40/maji-6884912_1280.jpg" alt=""> -->
+    </div>
+
+</body>
+
+</html>
